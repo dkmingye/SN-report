@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java"/>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/MEGA/MEGA HOPEX V1R2/java/lib/mj_anls.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/MegaJava/java doc/mj_anls/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/MEGA/MEGA HOPEX V1R2/java/lib/mj_api.jar" sourcepath="C:/Program Files (x86)/MEGA/MEGA HOPEX V1R2/java/doc/mj_api.doc.zip">
+		<attributes>
+			<attribute name="javadoc_location" value="file:/C:/MegaJava/java doc/mj_api/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Program Files (x86)/MEGA/MEGA HOPEX V1R2/java/lib/mj_toolkit.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
