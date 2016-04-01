@@ -1,0 +1,106 @@
+package com.sparnord.heatmaps.grcu.constants;
+
+/**
+ * @author JEG
+ */
+public class GRCMetaAssociationEnd {
+  // MetaAssociationEnds IDs
+  public static final String MAE_NODES_BY_ASSESSMENT                        = "~CYdAa83EEjse[Assessment Node]";
+  public static final String MAE_OWNED_ACTION_PLAN_BUSINESS_PROCESS         = "~s)(XLd8GGf76[Get action plans from BuProcess]";
+  public static final String MAE_NODE_ASSESSMENT_SESSION                    = "~BYdAa83EEfse[Assessment Session]";
+  public static final String MAE_AGGREGATING_FOR_ASSESSMENT_SESSION         = "~XgElfrx9FH(U[Aggregating for Assessment Session]";
+  public static final String MAE_ELEMENT_AT_RISK_FROM_RISK                  = "~rK3RCN7sFzTJ[Get Element at Risk From Risk]";
+  public static final String MAE_PARENT_OBJECTIVE_FROM_OBJECTIVE            = "~iN3RyX7sF5(J[Get Parent Objective From Objective]";
+  //TODO
+  public static final String MAE_PARENT_ACCOUNT_FROM_ACCOUNT                = "~)iqmhxUBHTsS[Get Parent Account From Account]";
+  public static final String MAE_PARENT_RISK_TYPE_FROM_RISK_TYPE            = "~CL3RYU7sFnnJ[Get Parent Risk Type From Risk Type]";
+  public static final String MAE_CHARACTERISTIC_BY_VALUE                    = "~kJsYO2FLEnUw[Assessed Characteristic]";
+  public static final String MAE_RISK_FROM_RISK_TYPE                        = "~W)tbmKS9z0t0[Risk]";
+  public static final String MAE_SUBBP                                      = "~Ol)gwmQ9pGF0[Business Process.Sub type]";
+  public static final String MAE_SUBORGP                                    = "~vsUi9FB5i4b3[Organizational Process.Sub-Type]";
+  public static final String MAE_ORGANIZATIONALPROCESS                      = "~ge(xpTF3naQ0[Org-Unit.Organizational Process]";
+  public static final String MAE_BUSINESSPROCESS                            = "~wj)gsmQ9pe90[Org-Unit.Business Process]";
+  public static final String MAE_RISK_FROM_BUSINESS_PROCESS                 = "~QGXSZqtmFP8N[Get Risks From Business Process]";
+  public static final String MAE_RISK_FROM_ORGANIZATIONAL_PROCESS           = "~oGXS1otmF54N[Get Risks From Org Process]";
+  public static final String MAE_RISK_TYPE_FROM_RISK                        = "~7L3RKq6sFDxI[Get Risk Type From Risk]";
+  public static final String MAE_CONTROL_FROM_RISK                          = "~OM3Rey6sFrEJ[Get Control From Risk]";
+  public static final String MAE_RISK_FROM_ORG_UNIT                         = "~A5rIk9rmF5wE[Get Risks From Org-Unit]";
+  public static final String MAE_SUB_ORG_UNIT_FROM_ORG_UNIT                 = "~cHXSSwtmFTLN[Get Sub Org Units]";
+  public static final String MAE_BUSINESS_PROCESS_FROM_ORG_UNIT             = "~pkkVVy7sF575[Get Business Process From Org-Unit]";
+  public static final String MAE_ORGANIZATIONAL_PROCESS_FROM_ORG_UNIT       = "~vkkVT(7sFbF5[Get Organizational Process From org-Unit]";
+  public static final String MAE_AGGREGATION_NODE                           = "~YgElfrx9FL(U[Assessment.Aggregation Node]";
+  public static final String MAE_ASSESSMENTTEMPLATE                         = "~EawhJUnhDnCH[Assessment Template]";
+  public static final String MAE_AssessedCharacteristics                    = "~cHsYI1FLEfQw[Assessed Characteristic]";
+  public static final String MAE_ASSESSED_VALUE_METAATTRIBUTEVALUE          = "~o18yT9lCE1(K[MetaAttributeValue]";
+  public static final String MAE_ASSESSMENT_SIGNATORY_PERSON_ASSESSMENT     = "~YEh4ZFbtELXP[Person Assignment]";
+  public static final String MAE_ASSESSMENT_SIGNATORY_MEGA_PERSON           = "~V0g69FotEflK[Mega Person]";
+  public static final String MAE_PERSON_ASSESSMENT_MEGA_PERSON              = "~L2000000Ca80[Assigned Person]";
+  public static final String MAE_ANSWER_DATA_TYPE                           = "~8YigLCyNEjYP[Answer Data Type]";
+  public static final String MAE_PROPERTY_LITERAL_VALUE                     = "~LOTx87GkEjmT[Property Literal Value]";
+  public static final String MAE_ASSESSMENT_VALUE_CONTEXT                   = "~CYdAa83EEjse[Assessment Value Context]";
+  public static final String MAE_ELEMENT_WITH_PROPERTY                      = "~46WHcebpEHMF[Element with Property]";
+  public static final String MAE_ASSESSMENT_TEMPLATE_QUESTIONNAIRE_TEMPLATE = "~xZHPmeNdE9wH[Questionnaire Template]";
+  public static final String MAE_RISK_FROM_OBJECTIVE                        = "~st6GC8KE9b70[Risk]";
+  public static final String MAE_SESSION_OWNER                              = "~UCh4myZtE1cN[Responsible]";
+  public static final String MAE_RESPONSIBLE                                = "~UCh4myZtE1cN[Responsible]";
+  public static final String MAE_ASSESSED_NODE                              = "~zGsYd9vKEviv[Assessing Node]";
+  public static final String MAE_ASSESSMENT_PARTICIPANT                     = "~et2urS(dEbMQ[Assessment Participant]";
+  public static final String MAE_ASSESSMENT_CAMPAIGN                        = "~iLuo5KUnFv04[Assessment Campaign]";
+  public static final String MAE_ASSESSMENT_OBJECT                          = "~MbwhgH3iDnnH[Assessed Object]";
+  public static final String MAE_FORMS_BY_RESPONDENT                        = "~z1Ky18LeELQP[Questionnaire]";
+  public static final String MAE_SESSION_QUESTIONNAIRE                      = "~(ihpOmTPEDzE[Questionnaire]";
+  public static final String MAE_QUESTIONNAIRE_PARTICIANT                   = "~(1Ky18LeEPQP[Assessment Participant]";
+  public static final String MAE_WORKFLOW_STATUS                            = "~zWRN)L64FjfI[Workflow Status]";
+  public static final String MAE_OBJECTIVE_BY_CONTROL                       = "~CXv)q0025H30[Objective]";
+  public static final String MAE_PICTURE                                    = "~vBwTyQyoEHHC[MetaPicture]";
+  public static final String MAE_STD_FILES                                  = "~okKHWLaDr810[_StdFile]";
+  public static final String MAE_CONTROL_TYPE_BY_CONTROL                    = "~4kWEU24V45A0[Control Type]";
+  public static final String MAE_SESSION_QUES_TEMPLATE                      = "~OlhpuhTPEzuE[Questionnaire Template]";
+  public static final String MAE_SESSION_QUES_TEMPLATE_PRESENT              = "~fBEzbmFuEnB2[Questionnaire Template Presentation]";
+  public static final String MAE_QUES_TEMP_QUES_ELEMENT                     = "~r)JjTOh1FzcQ[Questionnaire Element]";
+  public static final String MAE_GROUP_QUES_QUES                            = "~OYigscxNE1hM[Question]";
+  public static final String MAE_QUESTION_ANSWERS                           = "~SWigfdxNE1mM[Answer]";
+  public static final String MAE_QUES_ELEMENT_QUESTION                      = "~aWigJbxNE1QM[Question]";
+  public static final String MAE_QUES_ANSWER                                = "~SWigfdxNE1mM[Answer]";
+  public static final String MAE_ASSESSMENT_QUOT_RULE                       = "~GXHP(IOdErLI[Assessment Quotation Rule]";
+  public static final String MAE_ASSESSED_CHARACTERISTIC                    = "~2WHPGIOdErJI[Assessed Characteristic]";
+  public static final String MAE_ASSESSED_VALUE                             = "~jJsYO2FLEjUw[Assessed Value]";
+  public static final String MAE_ASSESSMENT_NODE                            = "~N1Gbp3(DE9Ao[Assessment Node]";
+  public static final String MAE_ASSESSED_OBJECT                            = "~(GsYd9vKEziv[Assessed Object]";
+  public static final String MAE_ASS_OBJ_ASS_SESSION                        = "~LbwhgH3iDjnH[Assessment Session]";
+  public static final String MAE_ASS_NODE_ASS_VALUE                         = "~O1Gbp3(DEDAo[Assessed Value]";
+  public static final String MAE_ASS_VALUE_ASS_CHARACTERISTIC               = "~kJsYO2FLEnUw[Assessed Characteristic]";
+  public static final String MAE_ASS_CHARACTERISTIC_METAATTRIBUTE           = "~fJsYO0FLETMw[MetaAttribute]";
+  public static final String MAE_ASS_VALUE_CONTEXT                          = "~CYdAa83EEjse[Assessment Value Context]";
+  public static final String MAE_ASSESSMENT_CONTEXT                         = "~tJsYk5vKE9ev[Assessment Node.Assessment Context]";
+  public static final String MAE_META_ATTRIBUTE_VALUE                       = "~(0000000C830[MetaAttributeValue]";
+  public static final String MAE_CAMPAIGN_SESSION                           = "~jLuo5KUnFz04[Assessment Session]";
+  public static final String MAE_WORK_PERIOD_BY_PLAN                        = "~ewtMszb0HD3T[Work Period]";
+  public static final String MAE_ASSESSMENT_TEMPLATE_AGGREGATION_SCHEMA     = "~IbwhDPnhDT5H[Owned Aggregation Schema]";
+  public static final String MAE_AGGREGATION_SCHEMA                         = "~R3sOy8dDEPAG[Owned Aggregation Schema]";
+  public static final String MAE_ASSESSMENT_TEMPLATE                        = "~EawhJUnhDnCH[Assessment Template]";
+  public static final String MAE_REPORT_ASSESSMENT_AGGREGATION              = "~NFlhr7hPHb9G[Assessment Aggregation]";
+  public static final String MAE_AGGREGATION_NODES_AGGREGATION              = "~60F)DA0LHjuM[Owned Value Context]";
+  public static final String MAE_HIGHER_MEASURE_CONTEXT                     = "~BHsY8DvKEflv[Assessment Node.Higher Node]";
+  public static final String MAE_LOWER_MEASURE_CONTEXT                      = "~CHsY8DvKEjlv[Assessment Node.Lower Node]";
+  public static final String MAE_AGGREGATION_FROM_AGGREGATION_SCHEMA        = "~BbwhBMnhDD1H[Aggregation]";
+  public static final String MAE_AGGREGATION_RULE_FROM_AGGREGATION          = "~5b9hqogCE5zJ[Aggregation Rule]";
+  public static final String MAE_CHARACTERISTICS_FROM_AGG_RULE              = "~kIsY04FLE9aw[Aggregating Characteristic]";
+  public static final String MAE_AGG_SCHEMAS_FROM_ASSESSMENT_AGGREGATION    = "~T3F)H70LH1YM[Aggregation Schema]";
+  public static final String MAE_PLAN_FROM_AUDIT                            = "~dwtMszb0H93T[Plan]";
+  public static final String MAE_CONTEXT_OF                                 = "~sJsYk5vKE5ev[Context Of]";
+  public static final String MAE_MEASURE_CONTEXT                            = "~zGsYd9vKEviv[Measure Context]";
+  public static final String MAE_POSSIBLE_ANSWER_VALUE                      = "~4ordulg5G5rB[Possible Answer Value]";
+  public static final String MAE_LOWER_NODE                                 = "~CHsY8DvKEjlv[Assessment Node.Lower Node]";
+  public static final String MAE_ASSESSMENT_SIGNATORY_VALUE_CONTEXT         = "~dt2urS(dEXMQ[Value Context]";
+  public static final String MAE_WORKFLOW_INSTANCE                          = "~rxLwpZVv9fu2[Workflow Instance]";
+  public static final String MAE_OWNED_INSTANCE_INSTANCE                    = "~evLwaVVv9vW2[Owned Status Instance]";
+  public static final String MAE_WORKFLOW_STATUS_SUBJECT                    = "~yituPRkv9r(0[Workflow Status]";
+  public static final String MAE_UsedQuestionnaireTemplate                  = "~6qv1Zl0JIzrT[Assessment Session.Used Questionnaire Template]";
+  public static final String MAE_CHARACTERIZED_OBJECT_TYPE                  = "~SGsYf0FLEbOw[Characterized Object type]";
+  public static final String MAE_CAMPAIGN_AX_DEPLOY_PARAM                   = "~x3tgqlgXGD2I[Assessment Deployment Query Parameter Value]";
+  public static final String MAE_AX_DEPLOY_PARAM_GENERIC_OBJECT             = "~pRjMK4PmDXCI[Generic Object]";
+  public static final String MAE_AX_TEMPLATE_OWNER                          = "~HbwhDPnhDP5H[Assessment Template Owner]";
+  public static final String MAE_ASSESSED_OBJECT_TYPE                       = "~PKj)6PmjDrQI[Assessed Object Type]";
+
+}
