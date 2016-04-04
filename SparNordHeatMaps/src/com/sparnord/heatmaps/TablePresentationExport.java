@@ -108,7 +108,7 @@ public class TablePresentationExport {
         //Text value = new Text("<b><center>" + hcell.getValueContexts().size() + "</center></b>", false);
         value.isHtml(true);
         if(isFirstHeatMap){
-        	value.getItemRenderer().addParameter("color", getColor(ligne,column,keyRisk));
+        	value.getItemRenderer().addParameter("color", getColor(ligne-1,column-1,keyRisk));
         }else{
         	value.getItemRenderer().addParameter("color", hcell.getColor());
         }
