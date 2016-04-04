@@ -136,7 +136,7 @@ public class HeatMapsMethodToolBox {
     return diagramViewtableTitle;
   }
 
-  public void setViews(final MegaRoot root, final ReportContent reportContent, final Boolean isHtml, final Hmap inherentRiskMap, final Hmap netRiskMap, boolean isKeyRisk) {
+  public void setViews(final MegaRoot root, final ReportContent reportContent, final Boolean isHtml, final Hmap inherentRiskMap, final Hmap netRiskMap, boolean isKeyRisk,NodesSearch nSearch) {
     View v_tableInherentRisk;
     View v_tableNetRisk;
     if (isHtml) {
@@ -164,6 +164,17 @@ public class HeatMapsMethodToolBox {
       v_tableNetRisk.addParameter("drilldownaction", GRCConstants.HEATMAP_DRILLDOWN_METAWIZARD);
       reportViews.addItem(v_tableInherentRisk, "1,1");
       reportViews.addItem(v_tableNetRisk, "1,2");
+      
+      ///view for assessment nodes
+      //Nodes title separate line
+   	 Text nodesTitle=new Text("<br><h2 style=\"margin-left:380px;\">Assessment nodes</h2>", false);
+   	 nodesTitle.isHtml(true);
+   	 reportContent.addText(nodesTitle); 
+   	 
+   	 /////////// add Nodes view
+   	 View nodesTableView=NodesView.getView(nSearch.get_Nodes_On_Map(), reportContent);
+   	 reportContent.addView(nodesTableView);
+   	 
     } else {
       TablePresentationExport tableInherentRisk = new TablePresentationExport();
       v_tableInherentRisk = tableInherentRisk.createReportTable(root, reportContent, inherentRiskMap,isKeyRisk,true);
@@ -171,6 +182,17 @@ public class HeatMapsMethodToolBox {
       v_tableNetRisk = tableNetRisk.createReportTable(root, reportContent, netRiskMap,isKeyRisk,false);
       reportContent.addView(v_tableInherentRisk);
       reportContent.addView(v_tableNetRisk);
+      
+    ///view for assessment nodes
+      //Nodes title separate line
+   	 Text nodesTitle=new Text("<br><h2 style=\"margin-left:380px;\">Assessment nodes</h2>", false);
+   	 nodesTitle.isHtml(true);
+   	 reportContent.addText(nodesTitle); 
+   	 
+   	 /////////// add Nodes view
+   	 View nodesTableView=NodesView.getExportView(nSearch.get_Nodes_On_Map(), reportContent);
+   	 reportContent.addView(nodesTableView);
+   
     }
   }
 

@@ -90,17 +90,9 @@ public class SNHeatMapsReport implements AnalysisReportWithContext {
 
     this.reportContent = new ReportContent("");
     Boolean isHtml = (iContext != AnalysisReportToolbox.cRtfDeliverable) && (!this.isExcel);
-    hmap.setViews(this.root, this.reportContent, isHtml, this.inherentRiskMap, this.netRiskMap,hMapIdParameters.keyRisk());
+    hmap.setViews(this.root, this.reportContent, isHtml, this.inherentRiskMap, this.netRiskMap,hMapIdParameters.keyRisk(),nSearch);
     
-    ///view for assessment nodes
-     //Nodes title separate line
-  	 Text nodesTitle=new Text("<br><h2 style=\"margin-left:380px;\">Assessment nodes</h2>", false);
-  	 nodesTitle.isHtml(true);
-  	 reportContent.addText(nodesTitle); 
-  	 
-  	 /////////// add Nodes view
-  	 View nodesTableView=NodesView.getView(nSearch.get_Nodes_On_Map(), reportContent);
-  	 reportContent.addView(nodesTableView);
+   
     
      //SystemLog.close();
     

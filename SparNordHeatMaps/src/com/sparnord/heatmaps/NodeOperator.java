@@ -53,6 +53,30 @@ public class NodeOperator {
 			return EmptyView(reportContent);
 		}
 		
+		public static Text getImpactText(MegaObject node){	
+			MegaCollection assessedValues=node.getCollection("Assessed Value");
+			if(assessedValues.size()>0){
+				for(MegaObject assessedValue:assessedValues){
+					MegaCollection assessedCharacs=assessedValue.getCollection("Assessed Characteristic");
+					if(assessedCharacs.size()>0){
+						MegaObject assessCharac=assessedCharacs.get(1);
+						if(assessCharac.getProp("Short Name").equalsIgnoreCase("Impact")){
+							MegaCollection propertyValues=assessedValue.getCollection("Property Value");
+							if(propertyValues.size()>0){
+								MegaObject propertyValue=propertyValues.get(1);
+								String levelName=propertyValue.getProp("Value Name");
+								Text impactText=new Text(levelName,false);
+								impactText.getItemRenderer().addParameter("color", getColorCode(levelName));
+								return impactText;
+							}
+						}
+					}
+				}
+			}
+			
+			return new Text("",false);
+		}
+		
 		public static View getLikelihood(ReportContent reportContent,MegaObject node){
 			MegaCollection assessedValues=node.getCollection("Assessed Value");
 			if(assessedValues.size()>0){
@@ -72,6 +96,30 @@ public class NodeOperator {
 			}
 			
 			return EmptyView(reportContent);
+		}
+		
+		public static Text getLikelihoodText(MegaObject node){
+			MegaCollection assessedValues=node.getCollection("Assessed Value");
+			if(assessedValues.size()>0){
+				for(MegaObject assessedValue:assessedValues){
+					MegaCollection assessedCharacs=assessedValue.getCollection("Assessed Characteristic");
+					if(assessedCharacs.size()>0){
+						MegaObject assessCharac=assessedCharacs.get(1);
+						if(assessCharac.getProp("Short Name").equalsIgnoreCase("Likelihood")){
+							MegaCollection propertyValues=assessedValue.getCollection("Property Value");
+							if(propertyValues.size()>0){
+								MegaObject propertyValue=propertyValues.get(1);
+								String levelName=propertyValue.getProp("Value Name");
+								Text likelihoodText=new Text(levelName,false);
+								likelihoodText.getItemRenderer().addParameter("color", getColorCode(levelName));
+								return likelihoodText;
+							}
+						}
+					}
+				}
+			}
+			
+			return new Text("",false);
 		}
 		
 		public static View getInherentRisk(ReportContent reportContent,MegaObject node){
@@ -94,6 +142,29 @@ public class NodeOperator {
 			return EmptyView(reportContent);
 		}
 		
+		public static Text getInherentRiskText(MegaObject node){
+			MegaCollection assessedValues=node.getCollection("Assessed Value");
+			if(assessedValues.size()>0){
+				for(MegaObject assessedValue:assessedValues){
+					MegaCollection assessedCharacs=assessedValue.getCollection("Assessed Characteristic");
+					if(assessedCharacs.size()>0){
+						MegaObject assessCharac=assessedCharacs.get(1);
+						if(assessCharac.getProp("Short Name").equalsIgnoreCase("Inherent Risk")){
+							MegaCollection propertyValues=assessedValue.getCollection("Property Value");
+							if(propertyValues.size()>0){
+								MegaObject propertyValue=propertyValues.get(1);
+								String levelName=propertyValue.getProp("Value Name");
+								Text inherentRiskText=new Text(levelName,false);
+								inherentRiskText.getItemRenderer().addParameter("color", getColorCode(levelName));
+								return inherentRiskText;
+							}
+						}
+					}
+				}
+			}
+			return new Text("",false);
+		}
+		
 		public static View getControlLevel(ReportContent reportContent,MegaObject node){
 			MegaCollection assessedValues=node.getCollection("Assessed Value");
 			if(assessedValues.size()>0){
@@ -112,6 +183,29 @@ public class NodeOperator {
 				}
 			}
 			return EmptyView(reportContent);
+		}
+		
+		public static Text getControlLevelText(MegaObject node){
+			MegaCollection assessedValues=node.getCollection("Assessed Value");
+			if(assessedValues.size()>0){
+				for(MegaObject assessedValue:assessedValues){
+					MegaCollection assessedCharacs=assessedValue.getCollection("Assessed Characteristic");
+					if(assessedCharacs.size()>0){						
+						MegaObject assessCharac=assessedCharacs.get(1);
+						if(assessCharac.getProp("Short Name").equalsIgnoreCase("Control  Level")||assessCharac.getProp("Short Name").equalsIgnoreCase("Control Level")){							
+							MegaCollection propertyValues=assessedValue.getCollection("Property Value");
+							if(propertyValues.size()>0){								
+								MegaObject propertyValue=propertyValues.get(1);
+								String levelName=propertyValue.getProp("Value Name");
+								Text controlLevelText=new Text(levelName,false);
+								controlLevelText.getItemRenderer().addParameter("color", getColorCode(levelName));
+								return controlLevelText;
+							}
+						}
+					}
+				}
+			}
+			return new Text("",false);
 		}
 		
 		public static View getNetRisk(ReportContent reportContent,MegaObject node){
@@ -134,6 +228,29 @@ public class NodeOperator {
 			return EmptyView(reportContent);
 		}
 		
+		public static Text getNetRiskText(MegaObject node){
+			MegaCollection assessedValues=node.getCollection("Assessed Value");
+			if(assessedValues.size()>0){
+				for(MegaObject assessedValue:assessedValues){
+					MegaCollection assessedCharacs=assessedValue.getCollection("Assessed Characteristic");
+					if(assessedCharacs.size()>0){
+						MegaObject assessCharac=assessedCharacs.get(1);
+						if(assessCharac.getProp("Short Name").equalsIgnoreCase("Net Risk")){
+							MegaCollection propertyValues=assessedValue.getCollection("Property Value");
+							if(propertyValues.size()>0){
+								MegaObject propertyValue=propertyValues.get(1);
+								String levelName=propertyValue.getProp("Value Name");
+								Text netRiskText=new Text(levelName,false);
+								netRiskText.getItemRenderer().addParameter("color", getColorCode(levelName));
+								return netRiskText;
+							}
+						}
+					}
+				}
+			}
+			return new Text("",false);
+		}
+		
 		
 		private static Image getColorImage(String level){
 			switch (level.toLowerCase()) {
@@ -152,6 +269,26 @@ public class NodeOperator {
 	        case "weak":  		return new Image("square_o2.gif", level);
 	        case "very weak":  	return new Image("square_r4.gif", level);
 	        default: 			return new Image("", level);    
+	     }
+		}
+		
+		private static String getColorCode(String level){
+			switch (level.toLowerCase()) {
+	        case "very low":  	return "225F16";
+	        case "low": 		return "4EDA37";
+	        case "medium":  	return "FFD55B";
+	        case "high":  		return "FF9228";
+	        case "very high":  	return "D12800";
+	        case "rare":  		return "225F16";
+	        case "possible": 	return "4EDA37";
+	        case "likely":  	return "FFD55B";
+	        case "probable":  	return "FF9228";
+	        case "certain":  	return "D12800";
+	        case "very strong": return "225F16";
+	        case "strong": 		return "4EDA37";
+	        case "weak":  		return "FF9228";
+	        case "very weak":  	return "D12800";
+	        default: 			return "";    
 	     }
 		}
 		
