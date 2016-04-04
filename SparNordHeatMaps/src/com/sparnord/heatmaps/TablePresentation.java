@@ -98,10 +98,9 @@ public class TablePresentation {
         Text value;
         if(isFirstHeatMap){
         	value = new Text("<div  style=\"text-align:center;color:#" + GRCColorsUtility.TITLE_COLOR + ";font-size:11px;font-family:arial;font-weight:bold\"> <b>" + getAssessedRiskCode(hcell) + " </b></div>", false);
-            
         }else{
-        	value = new Text("<div  style=\"text-align:center;color:#" + GRCColorsUtility.TITLE_COLOR + ";font-size:11px;font-family:arial;font-weight:bold\"> <b>" + hcell.getValueContexts().size() + " </b></div>", false);
-            
+        	//value = new Text("<div  style=\"text-align:center;color:#" + GRCColorsUtility.TITLE_COLOR + ";font-size:11px;font-family:arial;font-weight:bold\"> <b>" + hcell.getValueContexts().size() + " </b></div>", false);
+        	value = new Text("<div  style=\"text-align:center;color:#" + GRCColorsUtility.TITLE_COLOR + ";font-size:11px;font-family:arial;font-weight:bold\"> <b>" + getAssessedRiskCode(hcell) + " </b></div>", false);
         }
         
         value.isHtml(true);

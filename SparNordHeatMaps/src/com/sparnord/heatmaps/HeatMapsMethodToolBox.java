@@ -161,7 +161,7 @@ public class HeatMapsMethodToolBox {
       v_tableInherentRisk.addParameter("drilldownaction", GRCConstants.HEATMAP_DRILLDOWN_METAWIZARD);
       TablePresentation tableNetRisk = new TablePresentation();
       v_tableNetRisk = tableNetRisk.createReportTable(root, reportContent, netRiskMap,isKeyRisk,false);
-      v_tableNetRisk.addParameter("drilldownaction", GRCConstants.HEATMAP_DRILLDOWN_METAWIZARD);
+      v_tableNetRisk.addParameter("drilldownaction", GRCConstants.HEATMAP_DRILLDOWN_METAWIZARD);     
       reportViews.addItem(v_tableInherentRisk, "1,1");
       reportViews.addItem(v_tableNetRisk, "1,2");
       
@@ -179,7 +179,7 @@ public class HeatMapsMethodToolBox {
       TablePresentationExport tableInherentRisk = new TablePresentationExport();
       v_tableInherentRisk = tableInherentRisk.createReportTable(root, reportContent, inherentRiskMap,isKeyRisk,true);
       TablePresentationExport tableNetRisk = new TablePresentationExport();
-      v_tableNetRisk = tableNetRisk.createReportTable(root, reportContent, netRiskMap,isKeyRisk,false);
+      v_tableNetRisk = tableNetRisk.createReportTable(root, reportContent, netRiskMap,isKeyRisk,false);       
       reportContent.addView(v_tableInherentRisk);
       reportContent.addView(v_tableNetRisk);
       

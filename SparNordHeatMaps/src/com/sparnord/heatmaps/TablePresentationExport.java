@@ -100,10 +100,13 @@ public class TablePresentationExport {
         totalLine = totalLine + hcell.getValueContexts().size();
         Text value;
         if(isFirstHeatMap){
-        	value = new Text("<b><center>" + getAssessedRiskCode(hcell) + "</center></b>", false);
+        	//value = new Text("<div  style=\"text-align:center;color:#" + GRCColorsUtility.TITLE_COLOR + ";font-size:11px;font-family:arial;font-weight:bold\"> <b>" + getAssessedRiskCode(hcell) + " </b></div>", false);
+        	//value = new Text("<div  style=\"color:#D12800;font-size:11px;font-family:arial;font-weight:bold\"> <b>xxx </b></div>", false);
+        	value = new Text("<table width=\"100\"><tr><td height=\"100\">1234567, 1234567, 1234567, 1234567, 1234567, 1234567, 1234567, 1234567, 1234567, 1234567, 1234567, 1234567, 1234567, <td></tr></table>", false);
         	
         }else{
-        	value = new Text("<b><center>" + hcell.getValueContexts().size() + "</center></b>", false);
+        	//value = new Text("<b><center>" + hcell.getValueContexts().size() + "</center></b>", false);
+        	value = new Text("<div  style=\"text-align:center;color:#" + GRCColorsUtility.TITLE_COLOR + ";font-size:11px;font-family:arial;font-weight:bold\"> <b>" + getAssessedRiskCode(hcell) + " </b></div>", false);
         }
         //Text value = new Text("<b><center>" + hcell.getValueContexts().size() + "</center></b>", false);
         value.isHtml(true);
