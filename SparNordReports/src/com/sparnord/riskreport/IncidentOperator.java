@@ -23,6 +23,10 @@ public class IncidentOperator {
 		return incident.getProp("Occurrence Date","Display").toString();
 	}
 	
+	public static String getComment(MegaObject incident){
+		return incident.getProp("Comment","Display").toString();
+	}
+	
 	/*public static Date getOccurenceDate(MegaObject incident){
 		return (Date)incident.getProp("Occurrence Date","internal");
 	}

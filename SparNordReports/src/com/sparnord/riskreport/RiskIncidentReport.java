@@ -23,23 +23,30 @@ public class RiskIncidentReport implements AnalysisReportWithContext{
 	static String shortName = "~Z20000000D60[Short Name]";
 	static String name = "~210000000900[Name]";
 	static String riskCode="~PHawL1394f31[Risk Code]";
+	private Boolean isExcel = false;
 	
 	  public ReportContent getReportContent(final MegaRoot root, final Map<String, List<AnalysisParameter>> parameters, final Analysis analysis, final Object userData) {
 		    root.setDefault("@skipConfidential");
 
 		//SystemLog.initialize("C:\\Users\\ming\\Desktop\\log.txt");//for any troubleshooting
-		
+		  //Excel case
+		    if (analysis.getDr().toString().contains("XLS")) {
+		      this.isExcel = true;
+		    }
 		ReportContent reportContent = new ReportContent("");
 		
 		
 		try{
-			 // Get Context
+			// Get Context
 		    MegaCOMObject oContext = analysis.getMegaContext();
 		    short iContext = AnalysisRenderingToolbox.getGenerationMode(oContext);
-		    RiskIncidentReportGenerator riskIncident_Report_Controller = new RiskIncidentReportGenerator();
+		    ///////determine report format
+		    Boolean isHtml = (iContext != AnalysisReportToolbox.cRtfDeliverable) && (!this.isExcel);
+		    		    
+		    RiskIncidentReportGenerator riskIncident_Report_Controller = new RiskIncidentReportGenerator(isHtml);
 		    riskIncident_Report_Controller.initializeParameter(root, parameters, iContext);
 		    reportContent=riskIncident_Report_Controller.generateContent();
-						
+		    
 		    //SystemLog.close();
 		} catch (Exception e){
 			reportContent.addText(new Text("report error : "+e.getMessage(),false));

@@ -64,6 +64,7 @@ public class RiskIncidentReportGenerator {
   private MegaCollection      colBusLine;
   private Double              netLossThresholdAmount;
   private Date                beginDate, endDate;
+  private boolean			  isHtml=false; 
 
   private MegaRoot            root;
   ReportContent reportContent;
@@ -71,7 +72,8 @@ public class RiskIncidentReportGenerator {
   int incidents_Cal=0;
   static String riskCode="~PHawL1394f31[Risk Code]";
   
-  public RiskIncidentReportGenerator(){
+  public RiskIncidentReportGenerator(boolean isHtml){
+	  this.isHtml=isHtml;
 	  reportContent=new ReportContent("");
   }
   /**
@@ -224,8 +226,6 @@ public class RiskIncidentReportGenerator {
     		}   
         }
     });      
-    /////////////////////
-    //SystemLog.log("risk size :"+riskList.size());
     
     for (MegaObject risk : riskList) {
       //int nbreIncident = 0;
@@ -325,11 +325,20 @@ public class RiskIncidentReportGenerator {
 		 if(RiskOperator.isKeyRisk(risk)){
 			datasetRisk_part1.addItem(new Image("key risk (bizcon).gif", "key risk"), 1+","+1); 
 		 }
-		 ////impact erm text and img
-	 	datasetRisk_part1.addItem(viewGeneration_Color(impactLevel), 1+","+10); 
-		
-		 ////likelihood text and img
-	 	datasetRisk_part1.addItem(viewGeneration_Color(likelihoodLevel), 1+","+11);	 	
+		 
+		 if(isHtml){
+			////impact erm text and img
+			datasetRisk_part1.addItem(viewGeneration_Color(impactLevel), 1+","+10); 
+			////likelihood text and img
+			datasetRisk_part1.addItem(viewGeneration_Color(likelihoodLevel), 1+","+11);
+			
+		 } else {
+			////impact erm text with background color
+			datasetRisk_part1.addItem(textGeneration_Color(impactLevel), 1+","+10); 
+			////likelihood text with background color
+			datasetRisk_part1.addItem(textGeneration_Color(likelihoodLevel), 1+","+11);
+		 }
+	 		 	
 	
 	 /// add risk view part 1
 	 final View riskView_part1=new View(reportContent.addDataset(datasetRisk_part1));//id
@@ -456,7 +465,7 @@ public class RiskIncidentReportGenerator {
 		 	 final Dimension dimV=new Dimension("");
 		 	 final Dimension dimH=new Dimension("");
 		 	 dimV.setSize(incidents.size()+1);
-		 	 dimH.setSize(12);
+		 	 dimH.setSize(13);
 		 	
 		 	 incidentDataset.addDimension(dimV);
 		 	 incidentDataset.addDimension(dimH);
@@ -473,6 +482,7 @@ public class RiskIncidentReportGenerator {
 		 	 dimH.addItem(new Text("Net Actual Loss", false));	
 		 	 dimH.addItem(new Text("Gross Actual Loss", false));	
 		 	 dimH.addItem(new Text("Recoveries", false));	
+		 	 dimH.addItem(new Text("Description", false));
 		 	 
 		 		 	 
 	 	   for (int i=1;i<=filteredIncidents.size();i++){		   
@@ -489,7 +499,8 @@ public class RiskIncidentReportGenerator {
 	 		incidentDataset.addItem(new Value(IncidentOperator.getNetActualLoss(filteredIncidents.get(i)), userCurrencyId),i+","+10);// Net Actual Loss
 	 		incidentDataset.addItem(new Value(IncidentOperator.getGrossActualLoss(filteredIncidents.get(i)), userCurrencyId), i+","+11);// Gross Actual Loss
 	 		incidentDataset.addItem(new Value(IncidentOperator.getRecoveries(filteredIncidents.get(i)), userCurrencyId), i+","+12);// Recoveries
-		 	
+	 		incidentDataset.addItem(new Text(IncidentOperator.getComment(filteredIncidents.get(i)), false), i+","+13);// comment
+	 		
 	 		 grossActualLoss += Double.parseDouble(filteredIncidents.get(i).getProp(LDCConstants.MA_GROSS_ACTUAL_LOSS_LOCAL, "Internal").toString());
 	         recoveries += Double.parseDouble(filteredIncidents.get(i).getProp(LDCConstants.MA_RECOVERIES_LOCAL, "Internal").toString());
 	         netActualLoss += Double.parseDouble(filteredIncidents.get(i).getProp(LDCConstants.MA_NET_ACTUAL_LOSS_LOCAL, "Internal").toString());
@@ -517,6 +528,32 @@ public class RiskIncidentReportGenerator {
 	 	 
 	 	
 	 	 
+	}
+  
+  private Text textGeneration_Color(String level){
+		Text levelText=new Text(level,false);
+		levelText.getItemRenderer().addParameter("color", getColorCode(level));
+		return levelText;
+	}
+  
+  private static String getColorCode(String level){
+		switch (level.toLowerCase()) {
+      case "very low":  	return "225F16";
+      case "low": 		return "4EDA37";
+      case "medium":  	return "FFD55B";
+      case "high":  		return "FF9228";
+      case "very high":  	return "D12800";
+      case "rare":  		return "225F16";
+      case "possible": 	return "4EDA37";
+      case "likely":  	return "FFD55B";
+      case "probable":  	return "FF9228";
+      case "certain":  	return "D12800";
+      case "very strong": return "225F16";
+      case "strong": 		return "4EDA37";
+      case "weak":  		return "FF9228";
+      case "very weak":  	return "D12800";
+      default: 			return "";    
+   }
 	}
   
   private View viewGeneration_Color(String level){
