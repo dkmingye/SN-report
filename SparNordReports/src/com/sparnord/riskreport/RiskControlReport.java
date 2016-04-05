@@ -4,10 +4,16 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import com.mega.modeling.analysis.Analysis;
 import com.mega.modeling.analysis.AnalysisParameter;
+import com.mega.modeling.analysis.AnalysisRenderingToolbox;
 import com.mega.modeling.analysis.AnalysisReport;
+import com.mega.modeling.analysis.AnalysisReportToolbox;
+import com.mega.modeling.analysis.AnalysisReportWithContext;
 import com.mega.modeling.analysis.content.ReportContent;
 import com.mega.modeling.analysis.content.Text;
+import com.mega.modeling.api.MegaCOMObject;
 import com.mega.modeling.api.MegaCollection;
 import com.mega.modeling.api.MegaObject;
 import com.mega.modeling.api.MegaRoot;
@@ -15,20 +21,23 @@ import com.sparnord.common.LDCConstants;
 import com.sparnord.common.LDCDateUtilities;
 import com.sparnord.common.FilterTools;
 
-public class RiskControlReport implements AnalysisReport {
+public class RiskControlReport implements AnalysisReportWithContext {
 	static String shortName = "~Z20000000D60[Short Name]";
 	static String name = "~210000000900[Name]";
 	static String riskCode="~PHawL1394f31[Risk Code]";
+	private Boolean isExcel = false;
 	
 	boolean isKeyRisk = false;
 
 	@Override
 	public ReportContent getReportContent(final MegaRoot root,
 			final Map<String, List<AnalysisParameter>> paramMap,
-			final Object userData) {
+			final Analysis analysis,final Object userData) {
 
 		//SystemLog.initialize("C:\\Users\\ming\\Desktop\\log.txt");//for any troubleshooting
-		
+		if (analysis.getDr().toString().contains("XLS")) {
+		      this.isExcel = true;
+		    }
 		ReportContent reportContent = new ReportContent("");
 		
 		if (paramMap.isEmpty()) {
@@ -37,33 +46,29 @@ public class RiskControlReport implements AnalysisReport {
 		}
 		
 		try{
+			// Get Context
+		    MegaCOMObject oContext = analysis.getMegaContext();
+		    short iContext = AnalysisRenderingToolbox.getGenerationMode(oContext);
+		    ///////determine report format
+		    Boolean isHtml = (iContext != AnalysisReportToolbox.cRtfDeliverable) && (!this.isExcel);
+		    		    
 			//decompose parameters
 			ParameterDecomposer myParameters=new ParameterDecomposer(paramMap,root);
-			//get the main query 
-			//String query_GetRisk=QueryGenerator.getQuery_Report1_v2(myParameters); 
-			//SystemLog.log(query_GetRisk);
-			//execute query
-			//MegaCollection selectedRisks = root.getSelection(query_GetRisk, 1, riskCode);
-			//filter by owning entity
 			MegaCollection risks_filtered_1 = getRisks_From_OwningEntity_v2(root,myParameters.OrgUnits);
-			//SystemLog.log("after owning entity, the risk size :"+risks_filtered_1.size());
 			//filter by risk types
 		    MegaCollection risks_filtered_2=FilterTools.filterRisksByTypeDeeply(root, risks_filtered_1, myParameters.RiskTypes);
-		    //SystemLog.log("after risk type filter, the risk size :"+risks_filtered_2.size());
 		    //filter key risk
 		     MegaCollection risks_filtered_3;
 		    if(myParameters.isKeyRisk){
 		    	risks_filtered_3 =FilterTools.filterKeyRisks(root,risks_filtered_2,true);
-		        //SystemLog.log("after key risk filter, the risk size :"+risks_filtered_3.size());
 		    }else {
 		    	risks_filtered_3=FilterTools.filterKeyRisks(root, risks_filtered_2,false);
-		    	//SystemLog.log("after key risk filter, the risk size :"+risks_filtered_3.size());
 		    }
 		    
 			//filtering risk on the created date
 			MegaCollection filteredRisks=filter_risks_on_date(root,risks_filtered_3,myParameters.beginDate,myParameters.endDate);
 			//report generation
-			reportContent=new RiskControlReportGenerator(filteredRisks, reportContent).getReportRiskControl();						
+			reportContent=new RiskControlReportGenerator(filteredRisks, reportContent,isHtml).getReportRiskControl();						
 			
 		} catch (Exception e){
 			
@@ -95,9 +100,7 @@ public class RiskControlReport implements AnalysisReport {
 	  }
 	
 	private MegaCollection filter_risks_on_date(MegaRoot root,MegaCollection risks, Date beginDate,Date endDate){
-		
 		MegaCollection filteredRisks=root.getSelection("");
-		
 		 for(MegaObject risk:risks){	    	    
 	 	        // check if occurence date is between begin date and end date
 	 	        Date theRiskDate = LDCDateUtilities.resetTime(root, RiskOperator.getCreationDate(risk));
@@ -105,16 +108,9 @@ public class RiskControlReport implements AnalysisReport {
 	 	          //Don't continue treatment, go to next object in loop	        	
 	 	          continue;
 	 	        }
-	 	       
-	 	        /*SystemLog.log("risk created date:"+theRiskDate.toString());
-	        	SystemLog.log("Begin date:"+beginDate.toString());
-	        	SystemLog.log("End date:"+endDate.toString());
-	        	SystemLog.log("-----------------------------");*/
 	 	        filteredRisks.insert(risk); 	    	 
 	     }
-		
 		return filteredRisks;
-		
 	}
 
 }

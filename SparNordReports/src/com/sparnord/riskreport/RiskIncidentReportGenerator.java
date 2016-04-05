@@ -525,35 +525,12 @@ public class RiskIncidentReportGenerator {
 	 	 }else {
 	 		  return null;
 	 	 }
-	 	 
-	 	
-	 	 
 	}
   
   private Text textGeneration_Color(String level){
 		Text levelText=new Text(level,false);
-		levelText.getItemRenderer().addParameter("color", getColorCode(level));
+		levelText.getItemRenderer().addParameter("color",ColorCode.getColorCodeFromText(level));
 		return levelText;
-	}
-  
-  private static String getColorCode(String level){
-		switch (level.toLowerCase()) {
-      case "very low":  	return "225F16";
-      case "low": 		return "4EDA37";
-      case "medium":  	return "FFD55B";
-      case "high":  		return "FF9228";
-      case "very high":  	return "D12800";
-      case "rare":  		return "225F16";
-      case "possible": 	return "4EDA37";
-      case "likely":  	return "FFD55B";
-      case "probable":  	return "FF9228";
-      case "certain":  	return "D12800";
-      case "very strong": return "225F16";
-      case "strong": 		return "4EDA37";
-      case "weak":  		return "FF9228";
-      case "very weak":  	return "D12800";
-      default: 			return "";    
-   }
 	}
   
   private View viewGeneration_Color(String level){

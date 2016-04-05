@@ -13,10 +13,12 @@ import com.mega.modeling.api.MegaObject;
 public class RiskControlReportGenerator {
 	MegaCollection risks;
 	ReportContent reportContent;
+	private boolean isHtml;
 	
-	public RiskControlReportGenerator(MegaCollection risks, ReportContent reportContent){
+	public RiskControlReportGenerator(MegaCollection risks, ReportContent reportContent,boolean isHtml){
 		this.risks=risks;
 		this.reportContent=reportContent;		
+		this.isHtml=isHtml;
 	}
 	
 	public ReportContent getReportRiskControl(){
@@ -82,11 +84,20 @@ public class RiskControlReportGenerator {
 	 		 if(RiskOperator.isKeyRisk(risk)){
 	 			datasetRisk_part1.addItem(new Image("key risk (bizcon).gif", "key risk"), 1+","+1); 
 	 		 }
-	 		 ////impact erm text and img
-		 	datasetRisk_part1.addItem(viewGeneration_Color(impactLevel), 1+","+10); 
-	 		
-	 		 ////likelihood text and img
-		 	datasetRisk_part1.addItem(viewGeneration_Color(likelihoodLevel), 1+","+11);	 	
+	 		 
+	 		 if(isHtml){
+	 			////impact erm text and img
+	 			datasetRisk_part1.addItem(viewGeneration_Color(impactLevel), 1+","+10); 
+	 			////likelihood text and img
+	 			datasetRisk_part1.addItem(viewGeneration_Color(likelihoodLevel), 1+","+11);
+	 			
+	 		 } else {
+	 			////impact erm text with background color
+	 			datasetRisk_part1.addItem(textGeneration_Color(impactLevel), 1+","+10); 
+	 			////likelihood text with background color
+	 			datasetRisk_part1.addItem(textGeneration_Color(likelihoodLevel), 1+","+11);
+	 		 }
+	 		  	
 	 	
 	 	 /// add risk view part 1
 	 	 final View riskView_part1=new View(reportContent.addDataset(datasetRisk_part1));//id
@@ -179,6 +190,13 @@ public class RiskControlReportGenerator {
 	 	 myView.addRenderer(AnalysisReportToolbox.rTable);
 	 	 return myView;
 	}
+	
+	  private Text textGeneration_Color(String level){
+			Text levelText=new Text(level,false);
+			levelText.getItemRenderer().addParameter("color", ColorCode.getColorCodeFromText(level));
+			return levelText;
+		}
+	  
 	
 	private Image getColorImage(String level){
 		switch (level.toLowerCase()) {
