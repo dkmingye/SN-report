@@ -475,6 +475,7 @@ public class RiskIncidentReportGenerator {
 	 		 dimH.addItem(new Text("Occurrence Date", false));
 	 		 dimH.addItem(new Text("Near Miss", false));
 		 	 dimH.addItem(new Text("Name", false));
+		 	 dimH.addItem(new Text("Description", false));
 		 	 dimH.addItem(new Text("Parent Risk Type", false)); 
 		 	 dimH.addItem(new Text("Risk Type", false));
 		 	 dimH.addItem(new Text("Scope", false));//entity connected to the incident
@@ -482,9 +483,7 @@ public class RiskIncidentReportGenerator {
 		 	 dimH.addItem(new Text("Net Actual Loss", false));	
 		 	 dimH.addItem(new Text("Gross Actual Loss", false));	
 		 	 dimH.addItem(new Text("Recoveries", false));	
-		 	 dimH.addItem(new Text("Description", false));
 		 	 
-		 		 	 
 	 	   for (int i=1;i<=filteredIncidents.size();i++){		   
 	 		incidents_Cal+=1;
 	 		incidentDataset.addItem(new Image("incident (bizcon).gif", "incident (bizcon).gif"), i+","+1);// icon image
@@ -492,14 +491,15 @@ public class RiskIncidentReportGenerator {
 	 		incidentDataset.addItem(new Text(IncidentOperator.getDate(filteredIncidents.get(i)), false), i+","+3);// Date
 	 		incidentDataset.addItem(new Text(IncidentOperator.getNearMiss(filteredIncidents.get(i)), false), i+","+4);// Near Miss
 	 		incidentDataset.addItem(new Text(IncidentOperator.getName(filteredIncidents.get(i)), false), i+","+5);// Name
-	 		incidentDataset.addItem(new Text(IncidentOperator.getParentRiskType(filteredIncidents.get(i)), false), i+","+6);// Parent Risk Type
-	 		incidentDataset.addItem(new Text(IncidentOperator.getRiskType(filteredIncidents.get(i)), false), i+","+7);// Risk Type
-	 		incidentDataset.addItem(new Text(IncidentOperator.getEntity(filteredIncidents.get(i)), false), i+","+8);// entity
-	 		incidentDataset.addItem(new Text(IncidentOperator.getControl(filteredIncidents.get(i)), false), i+","+9);// Control Failed
-	 		incidentDataset.addItem(new Value(IncidentOperator.getNetActualLoss(filteredIncidents.get(i)), userCurrencyId),i+","+10);// Net Actual Loss
-	 		incidentDataset.addItem(new Value(IncidentOperator.getGrossActualLoss(filteredIncidents.get(i)), userCurrencyId), i+","+11);// Gross Actual Loss
-	 		incidentDataset.addItem(new Value(IncidentOperator.getRecoveries(filteredIncidents.get(i)), userCurrencyId), i+","+12);// Recoveries
-	 		incidentDataset.addItem(new Text(IncidentOperator.getComment(filteredIncidents.get(i)), false), i+","+13);// comment
+	 		incidentDataset.addItem(new Text(IncidentOperator.getComment(filteredIncidents.get(i)), false), i+","+6);// comment
+	 		incidentDataset.addItem(new Text(IncidentOperator.getParentRiskType(filteredIncidents.get(i)), false), i+","+7);// Parent Risk Type
+	 		incidentDataset.addItem(new Text(IncidentOperator.getRiskType(filteredIncidents.get(i)), false), i+","+8);// Risk Type
+	 		incidentDataset.addItem(new Text(IncidentOperator.getEntity(filteredIncidents.get(i)), false), i+","+9);// entity
+	 		incidentDataset.addItem(new Text(IncidentOperator.getControl(filteredIncidents.get(i)), false), i+","+10);// Control Failed
+	 		incidentDataset.addItem(new Value(IncidentOperator.getNetActualLoss(filteredIncidents.get(i)), userCurrencyId),i+","+11);// Net Actual Loss
+	 		incidentDataset.addItem(new Value(IncidentOperator.getGrossActualLoss(filteredIncidents.get(i)), userCurrencyId), i+","+12);// Gross Actual Loss
+	 		incidentDataset.addItem(new Value(IncidentOperator.getRecoveries(filteredIncidents.get(i)), userCurrencyId), i+","+13);// Recoveries
+	 		
 	 		
 	 		 grossActualLoss += Double.parseDouble(filteredIncidents.get(i).getProp(LDCConstants.MA_GROSS_ACTUAL_LOSS_LOCAL, "Internal").toString());
 	         recoveries += Double.parseDouble(filteredIncidents.get(i).getProp(LDCConstants.MA_RECOVERIES_LOCAL, "Internal").toString());
@@ -512,9 +512,9 @@ public class RiskIncidentReportGenerator {
 		      Value netActualLossValue = new Value(netActualLoss, userCurrencyId);
 		      
 		      incidentDataset.addItem(new Text("Sum",false),incidents.size()+1+","+1);
-		      incidentDataset.addItem(netActualLossValue,incidents.size()+1+","+10);
-		      incidentDataset.addItem(grossActualLossValue,incidents.size()+1+","+11);
-		      incidentDataset.addItem(recoveriesValue,incidents.size()+1+","+12);
+		      incidentDataset.addItem(netActualLossValue,incidents.size()+1+","+11);
+		      incidentDataset.addItem(grossActualLossValue,incidents.size()+1+","+12);
+		      incidentDataset.addItem(recoveriesValue,incidents.size()+1+","+13);
 		 	  /////////////
 		      
 		      final View incidentView=new View(reportContent.addDataset(incidentDataset));//id
