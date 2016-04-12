@@ -226,12 +226,16 @@ public class RiskIncidentReportGenerator {
     		}   
         }
     });      
-    
+   // int xxx=0;
     for (MegaObject risk : riskList) {
       //int nbreIncident = 0;
      // MegaCollection oColIncident = risk.getCollection(LDCConstants.MAE_RISK_INCIDENT);
+    	//xxx++;
+     // if(xxx>29 && xxx<31){
+    	  addRiskView(risk);
+    	  //reportContent.addText(new Text(xxx+"     xxx",false)); 
+      //}
       
-      addRiskView(risk);
 	 	 
      /* ////////////////////////start incidents calculation////////////////
       for (MegaObject incident : oColIncident) {
@@ -431,7 +435,6 @@ public class RiskIncidentReportGenerator {
 	  	double netActualLoss = 0.0;
 	 	 
 	     MegaCollection incidents = risk.getCollection(LDCConstants.MAE_RISK_INCIDENT);
-	     
 	     MegaCollection filteredIncidents=root.getSelection("");
 	     
 	     for(MegaObject selectedIncident:incidents){
@@ -464,7 +467,7 @@ public class RiskIncidentReportGenerator {
 		 	 
 		 	 final Dimension dimV=new Dimension("");
 		 	 final Dimension dimH=new Dimension("");
-		 	 dimV.setSize(incidents.size()+1);
+		 	 dimV.setSize(filteredIncidents.size()+1);
 		 	 dimH.setSize(13);
 		 	
 		 	 incidentDataset.addDimension(dimV);
@@ -484,7 +487,8 @@ public class RiskIncidentReportGenerator {
 		 	 dimH.addItem(new Text("Gross Actual Loss", false));	
 		 	 dimH.addItem(new Text("Recoveries", false));	
 		 	 
-	 	   for (int i=1;i<=filteredIncidents.size();i++){		   
+	 	   for (int i=1;i<=filteredIncidents.size();i++){
+	 		 
 	 		incidents_Cal+=1;
 	 		incidentDataset.addItem(new Image("incident (bizcon).gif", "incident (bizcon).gif"), i+","+1);// icon image
 	 		incidentDataset.addItem(new Text(IncidentOperator.getCode(filteredIncidents.get(i)), false), i+","+2);// code
@@ -504,17 +508,17 @@ public class RiskIncidentReportGenerator {
 	 		 grossActualLoss += Double.parseDouble(filteredIncidents.get(i).getProp(LDCConstants.MA_GROSS_ACTUAL_LOSS_LOCAL, "Internal").toString());
 	         recoveries += Double.parseDouble(filteredIncidents.get(i).getProp(LDCConstants.MA_RECOVERIES_LOCAL, "Internal").toString());
 	         netActualLoss += Double.parseDouble(filteredIncidents.get(i).getProp(LDCConstants.MA_NET_ACTUAL_LOSS_LOCAL, "Internal").toString());
-
+	 		
 	 	   }
 	 	      //add sum to the view
 		      Value grossActualLossValue = new Value(grossActualLoss, userCurrencyId);
 		      Value recoveriesValue = new Value(recoveries, userCurrencyId);
 		      Value netActualLossValue = new Value(netActualLoss, userCurrencyId);
 		      
-		      incidentDataset.addItem(new Text("Sum",false),incidents.size()+1+","+1);
-		      incidentDataset.addItem(netActualLossValue,incidents.size()+1+","+11);
-		      incidentDataset.addItem(grossActualLossValue,incidents.size()+1+","+12);
-		      incidentDataset.addItem(recoveriesValue,incidents.size()+1+","+13);
+		      incidentDataset.addItem(new Text("Sum",false),filteredIncidents.size()+1+","+1);
+		      incidentDataset.addItem(netActualLossValue,filteredIncidents.size()+1+","+11);
+		      incidentDataset.addItem(grossActualLossValue,filteredIncidents.size()+1+","+12);
+		      incidentDataset.addItem(recoveriesValue,filteredIncidents.size()+1+","+13);
 		 	  /////////////
 		      
 		      final View incidentView=new View(reportContent.addDataset(incidentDataset));//id
