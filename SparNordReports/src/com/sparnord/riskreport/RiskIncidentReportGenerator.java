@@ -51,6 +51,9 @@ public class RiskIncidentReportGenerator {
   private static final String PARAM_THRESHOLD  = "B846BA8956E2552E";
   private static final String PARAM_CURRENCY   = "B846B96356E25415";
 	
+  private static final String METAPICTURE_MEGEFIELD_RISK="~64SZgqB)yK91[Risk]";
+  private static final String METAPICTURE_MEGEFIELD_KEY_RISK="~gXBHnOK6LvmU[RISK_KEY.ICO]";
+  
 	/* for back testing template
 	private static final String PARAM_END_DATE   = "4AED4DF256E1219C";
 	private static final String PARAM_BEGIN_DATE = "4AED4DB856E12149";
@@ -272,9 +275,9 @@ public class RiskIncidentReportGenerator {
   
   private void addRiskView(MegaObject risk){
 	//risk headline 
-	Text riskHeadline=new Text("<h2 style=\"margin-left:380px;\">Risk #"+RiskOperator.getCode(risk)+"</h2>", false);
-	riskHeadline.isHtml(true);
-	reportContent.addText(riskHeadline); 
+	//Text riskHeadline=new Text("<h2 style=\"margin-left:380px;\">Risk #"+RiskOperator.getCode(risk)+"</h2>", false);
+	//riskHeadline.isHtml(true);
+	//reportContent.addText(riskHeadline); 
 	 ///////////
 	final Dataset datasetRisk_part1=new Dataset(""); // for the first 9 attributes
 	final Dataset datasetRisk_part2=new Dataset(""); // for the rest attributes
@@ -308,7 +311,7 @@ public class RiskIncidentReportGenerator {
 	dimH_part2.addItem(new Text("Loss Calculation", false));
 	dimH_part2.addItem(new Text("Identification Mode", false)); 		 	 	 	 	 	  	 	
 	
-	datasetRisk_part1.addItem(new Image("risk.gif", "riskgif"), 1+","+1);
+	datasetRisk_part1.addItem(new Image("risk.gif","risk.gif"), 1+","+1);
 	datasetRisk_part1.addItem(new Text("Risk #"+RiskOperator.getCode(risk), false), 1+","+2);// risk code
 	datasetRisk_part1.addItem(new Text(RiskOperator.getShortName(risk), false), 1+","+3); // Name
 	datasetRisk_part1.addItem(new Text(RiskOperator.getRiskStatus(risk), false), 1+","+4); // Status
@@ -328,6 +331,7 @@ public class RiskIncidentReportGenerator {
 		 //replace image with key risk img
 		 if(RiskOperator.isKeyRisk(risk)){
 			datasetRisk_part1.addItem(new Image("key risk (bizcon).gif", "key risk"), 1+","+1); 
+			//RISK.ICO.gif METAPICTURE_MEGEFIELD_KEY_RISK
 		 }
 		 
 		 if(isHtml){
@@ -351,29 +355,32 @@ public class RiskIncidentReportGenerator {
 	 reportContent.addView(riskView_part1);
 	 /// add risk view part 2
 	 final View riskView_part2=new View(reportContent.addDataset(datasetRisk_part2));//id
-	riskView_part2.addParameter("tablewidth", "830");
-	riskView_part2.addRenderer(AnalysisReportToolbox.rTable);	 
+	 riskView_part2.addParameter("tablewidth", "830");
+	 riskView_part2.addRenderer(AnalysisReportToolbox.rTable);	 
 	 reportContent.addView(riskView_part2);
 	 
 	 //controls title separate line
-		 Text controlTitle=new Text("<br><h2 style=\"margin-left:380px;\">Controls</h2>", false);
-		 controlTitle.isHtml(true);
-		 reportContent.addText(controlTitle); 
+	 if(RiskOperator.getPreventiveControl(risk).size()>0){
+		 Text control_separate_line=new Text("<br>", false);
+		 control_separate_line.isHtml(true);
+		 reportContent.addText(control_separate_line); 
 		 /////////// add control view
 		 View ControlTableView=generateViewForControlObjects(risk);
 	 	 reportContent.addView(ControlTableView);
-		 
+	 }
 	 //incidents title separate line
-	 Text incidentTitle=new Text("<br><h2 style=\"margin-left:380px;\">Incidents</h2>", false);
-	 incidentTitle.isHtml(true);
-	 reportContent.addText(incidentTitle); 
+	 if(risk.getCollection(LDCConstants.MAE_RISK_INCIDENT).size()>0){
+	 	 Text incident_separate_line=new Text("<br>", false);
+	 	 incident_separate_line.isHtml(true);
+	 	 reportContent.addText(incident_separate_line); 
+	 	 /////////// add incident view
+	 	 View incidentTableView=generateViewForIncidents(risk);
+	 	 reportContent.addView(incidentTableView);
+	 }
 	 
-	 /////////// add incident view
-	 View incidentTableView=generateViewForIncidents(risk);
-	 reportContent.addView(incidentTableView);
 	 
 	 //start separate line, ending one risk here
-	 Text sepLine=new Text("<br>****************************************************************************<br>", false);
+	 Text sepLine=new Text("<br><center>****************************************************************************</center><br>", false);
 	 sepLine.isHtml(true);
 	 reportContent.addText(sepLine);
 	 ///////////

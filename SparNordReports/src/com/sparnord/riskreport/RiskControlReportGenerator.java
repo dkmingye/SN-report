@@ -25,9 +25,9 @@ public class RiskControlReportGenerator {
 		
 		 for(MegaObject risk : risks){
 			 //risk headline 
-		 	 Text riskHeadline=new Text("<h2 style=\"margin-left:380px;\">Risk #"+RiskOperator.getCode(risk)+"</h2>", false);
-		 	 riskHeadline.isHtml(true);
-		 	 reportContent.addText(riskHeadline); 
+		 	 //Text riskHeadline=new Text("<h2 style=\"margin-left:380px;\">Risk #"+RiskOperator.getCode(risk)+"</h2>", false);
+		 	 //riskHeadline.isHtml(true);
+		 	 //reportContent.addText(riskHeadline); 
 		 	 ///////////
 		 final Dataset datasetRisk_part1=new Dataset(""); // for the first 9 attributes
 		 final Dataset datasetRisk_part2=new Dataset(""); // for the rest attributes
@@ -111,15 +111,16 @@ public class RiskControlReportGenerator {
 	 	 reportContent.addView(riskView_part2);
 	 	 
 	 	 //control title separate line
-	 	 Text controlTitle=new Text("<br><h2 style=\"margin-left:380px;\">Controls</h2>", false);
-	 	 controlTitle.isHtml(true);
-	 	 reportContent.addText(controlTitle); 
-	 	 ///////////
-	 	 View ControlTableView=generateViewForControlObjects(risk);
-	 	 reportContent.addView(ControlTableView);
-	 	 
+	 	 if(RiskOperator.getPreventiveControl(risk).size()>0){
+		 	 Text controlTitle=new Text("<br>", false);
+		 	 controlTitle.isHtml(true);
+		 	 reportContent.addText(controlTitle); 
+		 	 ///////////
+		 	 View ControlTableView=generateViewForControlObjects(risk);
+		 	 reportContent.addView(ControlTableView);
+	 	 }
 	 	 //start separate line, ending one risk here
-	 	 Text sepLine=new Text("<br>****************************************************************************<br>", false);
+	 	 Text sepLine=new Text("<br><center>****************************************************************************</center><br>", false);
 	 	 sepLine.isHtml(true);
 	 	 reportContent.addText(sepLine);
 	 	 ///////////
