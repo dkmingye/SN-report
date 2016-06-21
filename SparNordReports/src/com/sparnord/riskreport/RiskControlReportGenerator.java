@@ -1,5 +1,7 @@
 package com.sparnord.riskreport;
 
+import java.util.ArrayList;
+
 import com.mega.modeling.analysis.AnalysisReportToolbox;
 import com.mega.modeling.analysis.content.Dataset;
 import com.mega.modeling.analysis.content.Dimension;
@@ -11,11 +13,11 @@ import com.mega.modeling.api.MegaCollection;
 import com.mega.modeling.api.MegaObject;
 
 public class RiskControlReportGenerator {
-	MegaCollection risks;
+	ArrayList<MegaObject> risks;
 	ReportContent reportContent;
 	private boolean isHtml;
 	
-	public RiskControlReportGenerator(MegaCollection risks, ReportContent reportContent,boolean isHtml){
+	public RiskControlReportGenerator(ArrayList<MegaObject> risks, ReportContent reportContent,boolean isHtml){
 		this.risks=risks;
 		this.reportContent=reportContent;		
 		this.isHtml=isHtml;

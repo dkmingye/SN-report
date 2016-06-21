@@ -219,16 +219,9 @@ public class RiskIncidentReportGenerator {
     for (MegaObject riskItem : oColRisk) {
     	riskList.add(riskItem);
     }
-    Collections.sort(riskList, new Comparator<MegaObject>() {
-    	@Override
-        public int compare(MegaObject o1, MegaObject o2) {
-    		try{
-    		  return Integer.parseInt(o1.getProp("Risk Code"))-Integer.parseInt(o2.getProp("Risk Code"));
-    		}catch(Exception e){
-    		  return 0;
-    		}   
-        }
-    });      
+    
+    sortRisks_On_RiskCode(riskList);
+    sortRisks_On_Entity(riskList);     
 
     for (MegaObject risk : riskList) {
     	  addRiskView(risk);
@@ -236,6 +229,8 @@ public class RiskIncidentReportGenerator {
 
       return reportContent;
   }
+  
+  
   
 /// generate view for one risk
   
@@ -617,6 +612,34 @@ public class RiskIncidentReportGenerator {
     return null;
   }
 
+  
+	////sort risks based on risk code
+	private void sortRisks_On_RiskCode(ArrayList<MegaObject> riskList){
+	    Collections.sort(riskList, new Comparator<MegaObject>() {
+	    	@Override
+	        public int compare(MegaObject o1, MegaObject o2) {
+	    		try{
+	    		  return Integer.parseInt(o1.getProp("Risk Code"))-Integer.parseInt(o2.getProp("Risk Code"));
+	    		}catch(Exception e){
+	    		  return 0;
+	    		}   
+	        }
+	    }); 
+	}
+	
+	////sort risks based on owning entity
+	private void sortRisks_On_Entity(ArrayList<MegaObject> riskList){
+	    Collections.sort(riskList, new Comparator<MegaObject>() {
+	    	@Override
+	        public int compare(MegaObject o1, MegaObject o2) {
+	    		try{
+	    			return RiskOperator.getOwningEntity(o1).compareTo(RiskOperator.getOwningEntity(o2));
+	    		}catch(Exception e){
+	    		  return 0;
+	    		}   
+	        }
+	    }); 
+	}
 }
 
 

@@ -1,6 +1,8 @@
 package com.sparnord.riskreport;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -67,8 +69,15 @@ public class RiskControlReport implements AnalysisReportWithContext {
 		    
 			//filtering risk on the created date
 			MegaCollection filteredRisks=filter_risks_on_date(root,risks_filtered_3,myParameters.beginDate,myParameters.endDate);
+			//sort risk based on owning entity and risk code
+		    ArrayList<MegaObject> riskList = new ArrayList<MegaObject>();
+		    for (MegaObject riskItem : filteredRisks) {
+		    	riskList.add(riskItem);
+		    }
+		    sortRisks_On_RiskCode(riskList);
+		    sortRisks_On_Entity(riskList);
 			//report generation
-			reportContent=new RiskControlReportGenerator(filteredRisks, reportContent,isHtml).getReportRiskControl();						
+			reportContent=new RiskControlReportGenerator(riskList, reportContent,isHtml).getReportRiskControl();						
 			
 		} catch (Exception e){
 			
@@ -77,6 +86,34 @@ public class RiskControlReport implements AnalysisReportWithContext {
 		//SystemLog.close();
 		return reportContent;
 
+	}
+	
+	////sort risks based on risk code
+	private void sortRisks_On_RiskCode(ArrayList<MegaObject> riskList){
+	    Collections.sort(riskList, new Comparator<MegaObject>() {
+	    	@Override
+	        public int compare(MegaObject o1, MegaObject o2) {
+	    		try{
+	    		  return Integer.parseInt(o1.getProp("Risk Code"))-Integer.parseInt(o2.getProp("Risk Code"));
+	    		}catch(Exception e){
+	    		  return 0;
+	    		}   
+	        }
+	    }); 
+	}
+	
+	////sort risks based on owning entity
+	private void sortRisks_On_Entity(ArrayList<MegaObject> riskList){
+	    Collections.sort(riskList, new Comparator<MegaObject>() {
+	    	@Override
+	        public int compare(MegaObject o1, MegaObject o2) {
+	    		try{
+	    			return RiskOperator.getOwningEntity(o1).compareTo(RiskOperator.getOwningEntity(o2));
+	    		}catch(Exception e){
+	    		  return 0;
+	    		}   
+	        }
+	    }); 
 	}
 	
 	public static MegaCollection getRisks_From_OwningEntity_v2(final MegaRoot root, ArrayList<MegaObject> orgUnits) {   
