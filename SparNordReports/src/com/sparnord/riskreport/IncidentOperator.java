@@ -15,9 +15,7 @@ public class IncidentOperator {
 		return incident.getProp("Short Name");
 	}
 	
-	public static Double getRecoveries(MegaObject incident){
-		return Double.parseDouble(incident.getProp(LDCConstants.MA_RECOVERIES_LOCAL, "Internal").toString());
-	}
+
 	
 	public static String getDate(MegaObject incident){
 		return incident.getProp("Occurrence Date","Display").toString();
@@ -84,8 +82,24 @@ public class IncidentOperator {
 		return Double.parseDouble(incident.getProp(LDCConstants.MA_NET_ACTUAL_LOSS_LOCAL, "Internal").toString());
 	}
 	
+	public static String getNetActualLossString(MegaObject incident){
+		return incident.getProp(LDCConstants.MA_NET_ACTUAL_LOSS_LOCAL, "Display").toString();
+	}
+	
 	public static Double getGrossActualLoss(MegaObject incident){
 		return Double.parseDouble(incident.getProp(LDCConstants.MA_GROSS_ACTUAL_LOSS_LOCAL, "Internal").toString());
+	}
+	
+	public static String getGrossActualLossString(MegaObject incident){
+		return incident.getProp(LDCConstants.MA_GROSS_ACTUAL_LOSS_LOCAL, "Display").toString();
+	}
+	
+	public static Double getRecoveries(MegaObject incident){
+		return Double.parseDouble(incident.getProp(LDCConstants.MA_RECOVERIES_LOCAL, "Internal").toString());
+	}
+	
+	public static String getRecoveriesString(MegaObject incident){
+		return incident.getProp(LDCConstants.MA_RECOVERIES_LOCAL, "Display").toString();
 	}
 
 }
