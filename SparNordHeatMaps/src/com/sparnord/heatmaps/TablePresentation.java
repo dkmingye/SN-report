@@ -110,7 +110,8 @@ public class TablePresentation {
         if(isFirstHeatMap){
         	value.getItemRenderer().addParameter("color", getColor(ligne,column,keyRisk));
         }else{
-        	value.getItemRenderer().addParameter("color", hcell.getColor());
+        	//value.getItemRenderer().addParameter("color", hcell.getColor());
+        	value.getItemRenderer().addParameter("color", getColor(ligne,column,keyRisk));
         }        
         value.getItemRenderer().addParameter("drilldown", this.getDrillDown(hcell.getValueContexts()).toString());
         this.heatMapDataset.addItem(value, ligne + "," + column);

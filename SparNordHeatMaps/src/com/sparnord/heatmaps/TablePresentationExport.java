@@ -115,7 +115,8 @@ public class TablePresentationExport {
         if(isFirstHeatMap){
         	value.getItemRenderer().addParameter("color", getColor(ligne-1,column-1,keyRisk));
         }else{
-        	value.getItemRenderer().addParameter("color", hcell.getColor());
+        	//value.getItemRenderer().addParameter("color", hcell.getColor());
+        	value.getItemRenderer().addParameter("color", getColor(ligne-1,column-1,keyRisk));
         }
         //value.getItemRenderer().addParameter("color", hcell.getColor());
         value.getItemRenderer().addParameter("drilldown", this.getDrillDown(hcell.getValueContexts()).toString());

@@ -251,8 +251,47 @@ public class NodeOperator {
 			return new Text("",false);
 		}
 		
-		
 		private static Image getColorImage(String level){
+			switch (level.toLowerCase()) {
+		      case "very low":  	return new Image("square_g4.gif", level);
+		      case "low": 			return new Image("square_g4.gif", level);
+		      case "medium":  		return new Image("square_y3.gif", level);
+		      case "high":  		return new Image("square_y3.gif", level);
+		      case "very high":  	return new Image("square_r4.gif", level);
+		      case "rare":  		return new Image("square_g4.gif", level);
+		      case "possible": 		return new Image("square_g4.gif", level);
+		      case "likely":  		return new Image("square_y3.gif", level);
+		      case "probable":  	return new Image("square_y3.gif", level);
+		      case "certain":  		return new Image("square_r4.gif", level);
+		      case "very strong": 	return new Image("square_g4.gif", level);
+		      case "strong": 		return new Image("square_g4.gif", level);
+		      case "weak":  		return new Image("square_y3.gif", level);
+		      case "very weak":  	return new Image("square_r4.gif", level);
+	        default: 				return new Image("", level);    
+	     }
+		}
+		
+		private static String getColorCode(String level){
+			switch (level.toLowerCase()) {
+	        case "very low":  	return "00FF00";
+	        case "low": 		return "00FF00";
+	        case "medium":  	return "FFFF00";
+	        case "high":  		return "FFFF00";
+	        case "very high":  	return "FF0000";
+	        case "rare":  		return "00FF00";
+	        case "possible": 	return "00FF00";
+	        case "likely":  	return "FFFF00";
+	        case "probable":  	return "FFFF00";
+	        case "certain":  	return "FF0000";
+	        case "very strong": return "00FF00";
+	        case "strong": 		return "00FF00";
+	        case "weak":  		return "FFFF00";
+	        case "very weak":  	return "FF0000";
+	        default: 			return "";    
+	     }
+		}
+		
+/*		private static Image getColorImage(String level){
 			switch (level.toLowerCase()) {
 	        case "very low":  	return new Image("square_g4.gif", level);
 	        case "low": 		return new Image("square_g2.gif", level);
@@ -290,7 +329,7 @@ public class NodeOperator {
 	        case "very weak":  	return "D12800";
 	        default: 			return "";    
 	     }
-		}
+		}*/
 		
 	/*	private static Image getColorImage(String level){
 			switch (level.toLowerCase()) {
