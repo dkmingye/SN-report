@@ -28,7 +28,7 @@ public class RiskIncidentReport implements AnalysisReportWithContext{
 	  public ReportContent getReportContent(final MegaRoot root, final Map<String, List<AnalysisParameter>> parameters, final Analysis analysis, final Object userData) {
 		    root.setDefault("@skipConfidential");
 
-		//SystemLog.initialize("C:\\Users\\ming\\Desktop\\log.txt");//for any troubleshooting
+		  SystemLog.initialize("C:\\Users\\ming\\Desktop\\log.txt");//for any troubleshooting
 		  //Excel case
 		    if (analysis.getDr().toString().contains("XLS")) {
 		      this.isExcel = true;
@@ -47,7 +47,7 @@ public class RiskIncidentReport implements AnalysisReportWithContext{
 		    riskIncident_Report_Controller.initializeParameter(root, parameters, iContext);
 		    reportContent=riskIncident_Report_Controller.generateContent();
 		    
-		    //SystemLog.close();
+		    SystemLog.close();
 		} catch (Exception e){
 			reportContent.addText(new Text("report error : "+e.getMessage(),false));
 			

@@ -63,10 +63,18 @@ public class IncidentOperator {
 	
 	public static String getNearMiss(MegaObject incident){
 		String nearmiss=incident.getProp("Near Miss","Display").toString();
-		if(nearmiss.compareToIgnoreCase("1")==1){
+		if(nearmiss.contains("1")){
 			return "Yes";
 		}
 		return "No";
+	}
+	
+	public static boolean isNearMiss(MegaObject incident){
+		String nearmiss=incident.getProp("Near Miss","Display").toString();
+		if(nearmiss.contains("1")){
+			return true;
+		}
+		return false;
 	}
 	
 	public static String getEntity(MegaObject incident){

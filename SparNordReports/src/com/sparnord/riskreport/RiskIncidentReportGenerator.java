@@ -336,8 +336,13 @@ public class RiskIncidentReportGenerator {
 	 	 incident_separate_line.isHtml(true);
 	 	 reportContent.addText(incident_separate_line); 
 	 	 /////////// add incident view
-	 	 View incidentTableView=generateViewForIncidents(risk);
-	 	 reportContent.addView(incidentTableView);
+	 	 View incidentTableView_nonNearMiss=generateViewForIncidents(risk,false);
+	 	 reportContent.addView(incidentTableView_nonNearMiss);
+	 	 ////sep line	 
+	 	 reportContent.addText(incident_separate_line); 
+	 	 ////
+	 	 View incidentTableView_nearMiss=generateViewForIncidents(risk,true);
+	 	 reportContent.addView(incidentTableView_nearMiss);
 	 }
 	 
 	 
@@ -392,7 +397,7 @@ public class RiskIncidentReportGenerator {
 	}
   
   /// generate incident view for one risk
-  private View generateViewForIncidents(MegaObject risk){
+  private View generateViewForIncidents(MegaObject risk,boolean view_for_NearMiss_Incident){
 	  
 	    Object userCurrencyId = this.root.currentEnvironment().getCurrency().getUserCurrencyId();
 	  	double grossActualLoss = 0.0;
@@ -418,12 +423,25 @@ public class RiskIncidentReportGenerator {
 	 	          //Don't continue treatment, go to next object in loop	        	
 	 	          continue;
 	 	        }
+	 	        //filtering incidents based on whether nearmiss or not
+	 	        if(view_for_NearMiss_Incident){
+	 	        	if(!IncidentOperator.isNearMiss(selectedIncident)){
+	 	        		continue;// drops the non near miss incident here 
+	 	        	}
+	 	        	filteredIncidents.insert(selectedIncident);
+	 	        }else{
+	 	        	if(IncidentOperator.isNearMiss(selectedIncident)){
+	 	        		continue;// drops the near miss incident here 
+	 	        	}
+	 	        	
+	 	        	filteredIncidents.insert(selectedIncident);
+	 	        }
 	 	       
 	 	       /*SystemLog.log("Declaration date:"+mgIncidentDate.toString());
 	        	SystemLog.log("Begin date:"+this.beginDate.toString());
 	        	SystemLog.log("End date:"+this.endDate.toString());
 	        	SystemLog.log("-----------------------------");*/
-	 	       filteredIncidents.insert(selectedIncident); 	    	 
+	 	       //filteredIncidents.insert(selectedIncident); 	    	 
 	     }
 		
 			 	 
@@ -455,7 +473,11 @@ public class RiskIncidentReportGenerator {
 	 	   for (int i=1;i<=filteredIncidents.size();i++){
 	 		 
 	 		incidents_Cal+=1;
-	 		incidentDataset.addItem(new Image("incident (bizcon).gif", "incident (bizcon).gif"), i+","+1);// icon image
+	 		if(view_for_NearMiss_Incident){
+	 			incidentDataset.addItem(new Image("incident_nearmiss.gif", "incident_nearmiss.gif"), i+","+1);// icon image
+	 		}else{
+	 			incidentDataset.addItem(new Image("incident (bizcon).gif", "incident (bizcon).gif"), i+","+1);// icon image
+	 		}
 	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getCode(filteredIncidents.get(i))), i+","+2);// code
 	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getDate(filteredIncidents.get(i))), i+","+3);// Date
 	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getNearMiss(filteredIncidents.get(i))), i+","+4);// Near Miss
