@@ -26,6 +26,7 @@ public class RiskControlReportGenerator {
 	public ReportContent getReportRiskControl(){
 		
 		 for(MegaObject risk : risks){
+			 boolean isKeyRisk=RiskOperator.isKeyRisk(risk);
 			 //risk headline 
 		 	 //Text riskHeadline=new Text("<h2 style=\"margin-left:380px;\">Risk #"+RiskOperator.getCode(risk)+"</h2>", false);
 		 	 //riskHeadline.isHtml(true);
@@ -83,21 +84,21 @@ public class RiskControlReportGenerator {
 	 	String impactLevel=RiskOperator.getImpactERM(risk);
 	 	String likelihoodLevel=RiskOperator.getLikeLihood(risk);
 	 	     //replace image with key risk img
-	 		 if(RiskOperator.isKeyRisk(risk)){
+	 		 if(isKeyRisk){
 	 			datasetRisk_part1.addItem(new Image("key risk (bizcon).gif", "key risk"), 1+","+1); 
 	 		 }
 	 		 
 	 		 if(isHtml){
 	 			////impact erm text and img
-	 			datasetRisk_part1.addItem(viewGeneration_Color(impactLevel), 1+","+10); 
+	 			datasetRisk_part1.addItem(viewGeneration_Color(impactLevel,isKeyRisk), 1+","+10); 
 	 			////likelihood text and img
-	 			datasetRisk_part1.addItem(viewGeneration_Color(likelihoodLevel), 1+","+11);
+	 			datasetRisk_part1.addItem(viewGeneration_Color(likelihoodLevel,isKeyRisk), 1+","+11);
 	 			
 	 		 } else {
 	 			////impact erm text with background color
-	 			datasetRisk_part1.addItem(textGeneration_Color(impactLevel), 1+","+10); 
+	 			datasetRisk_part1.addItem(textGeneration_Color(impactLevel,isKeyRisk), 1+","+10); 
 	 			////likelihood text with background color
-	 			datasetRisk_part1.addItem(textGeneration_Color(likelihoodLevel), 1+","+11);
+	 			datasetRisk_part1.addItem(textGeneration_Color(likelihoodLevel,isKeyRisk), 1+","+11);
 	 		 }
 	 		  	
 	 	
@@ -173,15 +174,21 @@ public class RiskControlReportGenerator {
 		
 	}
 	
-	private View viewGeneration_Color(String level){
+	private View viewGeneration_Color(String level,boolean isKeyRisk){
 		 final Dataset myDataset=new Dataset("");
 	 	 final Dimension dimV=new Dimension("");
 	 	 final Dimension dimH=new Dimension("");
 	 	 dimV.setSize(1);
 	 	 dimH.setSize(2);
 	 	myDataset.addDimension(dimV);
-	 	myDataset.addDimension(dimH);	
-	 	myDataset.addItem(getColorImage(level), 1+","+1);
+	 	myDataset.addDimension(dimH);
+	 	
+	 	if(isKeyRisk){
+	 		myDataset.addItem(getColorImageKeyRisk(level), 1+","+1);
+	 	}else {
+	 		myDataset.addItem(getColorImage(level), 1+","+1);
+	 	}
+	 	
 	 	myDataset.addItem(styleText_verdana(level), 1+","+2);
 	 	 
 	 	 final View myView=new View(reportContent.addDataset(myDataset));//id
@@ -190,9 +197,14 @@ public class RiskControlReportGenerator {
 	 	 return myView;
 	}
 	
-	  private Text textGeneration_Color(String level){
+	  private Text textGeneration_Color(String level,boolean isKeyRisk){
 			Text levelText=styleText_verdana(level);
-			levelText.getItemRenderer().addParameter("color", ColorCode.getColorCodeFromText(level));
+			if(isKeyRisk){
+				levelText.getItemRenderer().addParameter("color", ColorCode.getColorCodeFromText_KeyRisk(level));
+			}else{
+				levelText.getItemRenderer().addParameter("color", ColorCode.getColorCodeFromText(level));
+			}
+			
 			return levelText;
 		}
 	  
@@ -200,34 +212,35 @@ public class RiskControlReportGenerator {
 	private Image getColorImage(String level){
 		switch (level.toLowerCase()) {
         case "very low":  	return new Image("square_g4.gif", level);
-        case "low": 		return new Image("square_g2.gif", level);
-        case "medium":  	return new Image("square_y2.gif", level);
-        case "high":  		return new Image("square_o2.gif", level);
+        case "low": 		return new Image("square_g4.gif", level);
+        case "medium":  	return new Image("square_y3.gif", level);
+        case "high":  		return new Image("square_y3.gif", level);
         case "very high":  	return new Image("square_r4.gif", level);
         case "rare":  		return new Image("square_g4.gif", level);
-        case "possible": 	return new Image("square_g2.gif", level);
-        case "likely":  	return new Image("square_y2.gif", level);
-        case "probable":  	return new Image("square_o2.gif", level);
+        case "possible": 	return new Image("square_g4.gif", level);
+        case "likely":  	return new Image("square_y3.gif", level);
+        case "probable":  	return new Image("square_y3.gif", level);
         case "certain":  	return new Image("square_r4.gif", level);
         default: 			return new Image("", level);    
      }
 	}
 	
-	private String getColor(String level){
+	private Image getColorImageKeyRisk(String level){
 		switch (level.toLowerCase()) {
-        case "very low":  	return "#225F16";
-        case "low": 		return "#4EDA37";
-        case "medium":  	return "#FFD55B";
-        case "high":  		return "#FF9228";
-        case "very high":  	return "#D12800";
-        case "rare":  		return "#225F16";
-        case "possible": 	return "#4EDA37";
-        case "likely":  	return "#FFD55B";
-        case "probable":  	return "#FF9228";
-        case "certain":  	return "#D12800";
-        default: 			return "";    
+        case "very low":  	return new Image("square_g4.gif", level);
+        case "low": 		return new Image("square_g4.gif", level);
+        case "medium":  	return new Image("square_g4.gif", level);
+        case "high":  		return new Image("square_y3.gif", level);
+        case "very high":  	return new Image("square_r4.gif", level);
+        case "rare":  		return new Image("square_g4.gif", level);
+        case "possible": 	return new Image("square_g4.gif", level);
+        case "likely":  	return new Image("square_g4.gif", level);
+        case "probable":  	return new Image("square_y3.gif", level);
+        case "certain":  	return new Image("square_r4.gif", level);
+        default: 			return new Image("", level);    
      }
 	}
+	
 /*	
 	private Text styleText_verdana(String text,int width){
 		String tableStartTxt="<table width=\""+width+"\"><tr><td>";
