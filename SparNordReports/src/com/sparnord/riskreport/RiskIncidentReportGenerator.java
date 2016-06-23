@@ -2,13 +2,15 @@
 package com.sparnord.riskreport;
 
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import com.mega.extraction.ExtractionPath;
@@ -18,7 +20,6 @@ import com.mega.modeling.analysis.AnalysisReportToolbox;
 import com.mega.modeling.analysis.content.Dataset;
 import com.mega.modeling.analysis.content.Dimension;
 import com.mega.modeling.analysis.content.Image;
-import com.mega.modeling.analysis.content.Item;
 import com.mega.modeling.analysis.content.ReportContent;
 import com.mega.modeling.analysis.content.Text;
 import com.mega.modeling.analysis.content.Value;
@@ -26,10 +27,8 @@ import com.mega.modeling.analysis.content.View;
 import com.mega.modeling.api.MegaCollection;
 import com.mega.modeling.api.MegaObject;
 import com.mega.modeling.api.MegaRoot;
-import com.sparnord.common.FilterTools;
 import com.sparnord.common.LDCConstants;
 import com.sparnord.common.LDCDateUtilities;
-import com.sparnord.common.LDCReportViewUtility;
 import com.sparnord.common.Palette;
 
 
@@ -53,7 +52,8 @@ public class RiskIncidentReportGenerator {
 	
   private static final String METAPICTURE_MEGEFIELD_RISK="~64SZgqB)yK91[Risk]";
   private static final String METAPICTURE_MEGEFIELD_KEY_RISK="~gXBHnOK6LvmU[RISK_KEY.ICO]";
-  
+  private static final NumberFormat formatter2 = NumberFormat.getNumberInstance(Locale.GERMAN);
+  private static final NumberFormat formatter = new DecimalFormat("#,###,##0.00");    
 	/* for back testing template
 	private static final String PARAM_END_DATE   = "4AED4DF256E1219C";
 	private static final String PARAM_BEGIN_DATE = "4AED4DB856E12149";
@@ -85,7 +85,8 @@ public class RiskIncidentReportGenerator {
    * @param iContext iContext
    */
   public void initializeParameter(final MegaRoot oRoot, final Map<String, List<AnalysisParameter>> parameters, final short iContext) {
-    this.root = oRoot;
+	formatter2.setMinimumFractionDigits(2);
+	this.root = oRoot;
     this.colRiskType = oRoot.getSelection("");
     this.colBusProc = oRoot.getSelection("");
     this.colOrgUnit = oRoot.getSelection("");
@@ -504,10 +505,16 @@ public class RiskIncidentReportGenerator {
 		      Value grossActualLossValue = new Value(grossActualLoss, userCurrencyId);
 		      Value recoveriesValue = new Value(recoveries, userCurrencyId);
 		      Value netActualLossValue = new Value(netActualLoss, userCurrencyId);
+		      /////////////////////////
+		      String currency=IncidentOperator.getCurrencyString();
+		      String grossActualLossString=currency+" "+formatter2.format(grossActualLoss);
+		      String recoveriesString=currency+" "+formatter2.format(recoveries);
+		      String netActualLossString=currency+" "+formatter2.format(netActualLoss);
+		      ///////////////////////
 		      incidentDataset.addItem(styleText_verdana("Sum"),filteredIncidents.size()+1+","+1);
-		      incidentDataset.addItem(netActualLossValue,filteredIncidents.size()+1+","+11);
-		      incidentDataset.addItem(grossActualLossValue,filteredIncidents.size()+1+","+12);
-		      incidentDataset.addItem(recoveriesValue,filteredIncidents.size()+1+","+13);
+		      incidentDataset.addItem(styleText_verdana(netActualLossString),filteredIncidents.size()+1+","+11);
+		      incidentDataset.addItem(styleText_verdana(grossActualLossString),filteredIncidents.size()+1+","+12);
+		      incidentDataset.addItem(styleText_verdana(recoveriesString),filteredIncidents.size()+1+","+13);
 		 	  /////////////
 		      
 		      final View incidentView=new View(reportContent.addDataset(incidentDataset));//id

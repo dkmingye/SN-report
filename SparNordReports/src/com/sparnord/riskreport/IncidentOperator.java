@@ -6,7 +6,7 @@ import com.mega.modeling.api.MegaObject;
 import com.sparnord.common.LDCConstants;
 
 public class IncidentOperator {
-	
+	private static String currencyStr="";
 	public static String getCode(MegaObject incident){
 		return incident.getProp("Code \\Incident");
 	}
@@ -91,6 +91,10 @@ public class IncidentOperator {
 	}
 	
 	public static String getNetActualLossString(MegaObject incident){
+		if(currencyStr.length()==0){
+			String str=incident.getProp(LDCConstants.MA_NET_ACTUAL_LOSS_LOCAL, "Display").toString();
+			currencyStr=str.replaceAll("[^A-Za-z]+", "");
+		}
 		return incident.getProp(LDCConstants.MA_NET_ACTUAL_LOSS_LOCAL, "Display").toString();
 	}
 	
@@ -108,6 +112,10 @@ public class IncidentOperator {
 	
 	public static String getRecoveriesString(MegaObject incident){
 		return incident.getProp(LDCConstants.MA_RECOVERIES_LOCAL, "Display").toString();
+	}
+	
+	public static String getCurrencyString(){
+		return currencyStr;
 	}
 
 }
