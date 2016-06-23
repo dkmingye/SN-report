@@ -16,7 +16,7 @@ public class NodesView {
 	 	 final Dimension dimV=new Dimension("");
 	 	 final Dimension dimH=new Dimension("");
 	 	 dimV.setSize(nodes.size());
-	 	 dimH.setSize(8);
+	 	 dimH.setSize(9);
 	 	
 	 	 nodesDataset.addDimension(dimV);
 	 	 nodesDataset.addDimension(dimH);	 	 
@@ -26,6 +26,7 @@ public class NodesView {
 	 		 dimH.addItem(new Text(" ", false));
 	 		 dimH.addItem(new Text("Local name", false));
 		 	 dimH.addItem(new Text("Assessed Object", false));
+		 	 dimH.addItem(new Text("Risk Code", false));
 		 	 dimH.addItem(new Text("Impact", false)); 
 		 	 dimH.addItem(new Text("Likelihood", false));
 		 	 dimH.addItem(new Text("Inherent Risk", false)); 
@@ -35,12 +36,13 @@ public class NodesView {
 	 	   for (int i=1;i<=nodes.size();i++){
 	 		nodesDataset.addItem(new Image("Assessment Value Context (bizcon).gif", "Assessment Value Context (bizcon).gif"), i+","+1);
 	 		nodesDataset.addItem(new Text(NodeOperator.getShortName(nodes.get(i)), false), i+","+2);
-	 		nodesDataset.addItem(new Text(NodeOperator.getAssessedObject(nodes.get(i)), false), i+","+3); 	 	  
-	 		nodesDataset.addItem(NodeOperator.getImpact(reportContent,nodes.get(i)), i+","+4); 
-	 		nodesDataset.addItem(NodeOperator.getLikelihood(reportContent,nodes.get(i)), i+","+5); 
-	 		nodesDataset.addItem(NodeOperator.getInherentRisk(reportContent,nodes.get(i)), i+","+6);
-	 		nodesDataset.addItem(NodeOperator.getControlLevel(reportContent,nodes.get(i)),  i+","+7); 
-	 		nodesDataset.addItem(NodeOperator.getNetRisk(reportContent,nodes.get(i)), i+","+8); 
+	 		nodesDataset.addItem(new Text(NodeOperator.getAssessedObject(nodes.get(i)), false), i+","+3);
+	 		nodesDataset.addItem(new Text("#"+NodeOperator.getAssessedObjectCode(nodes.get(i)), false), i+","+4); 
+	 		nodesDataset.addItem(NodeOperator.getImpact(reportContent,nodes.get(i)), i+","+5); 
+	 		nodesDataset.addItem(NodeOperator.getLikelihood(reportContent,nodes.get(i)), i+","+6); 
+	 		nodesDataset.addItem(NodeOperator.getInherentRisk(reportContent,nodes.get(i)), i+","+7);
+	 		nodesDataset.addItem(NodeOperator.getControlLevel(reportContent,nodes.get(i)),  i+","+8); 
+	 		nodesDataset.addItem(NodeOperator.getNetRisk(reportContent,nodes.get(i)), i+","+9); 
 	 	   }
 	 	 }
 	 	
@@ -55,7 +57,7 @@ public class NodesView {
 	 	 final Dimension dimV=new Dimension("");
 	 	 final Dimension dimH=new Dimension("");
 	 	 dimV.setSize(nodes.size());
-	 	 dimH.setSize(8);
+	 	 dimH.setSize(9);
 	 	
 	 	 nodesDataset.addDimension(dimV);
 	 	 nodesDataset.addDimension(dimH);	 	 
@@ -65,6 +67,7 @@ public class NodesView {
 	 		 dimH.addItem(new Text(" ", false));
 	 		 dimH.addItem(new Text("Local name", false));
 		 	 dimH.addItem(new Text("Assessed Object", false));
+		 	 dimH.addItem(new Text("Risk Code", false));
 		 	 dimH.addItem(new Text("Impact", false)); 
 		 	 dimH.addItem(new Text("Likelihood", false));
 		 	 dimH.addItem(new Text("Inherent Risk", false)); 
@@ -74,12 +77,13 @@ public class NodesView {
 	 	   for (int i=1;i<=nodes.size();i++){
 	 		nodesDataset.addItem(new Image("Assessment Value Context (bizcon).gif", "Assessment Value Context (bizcon).gif"), i+","+1);
 	 		nodesDataset.addItem(new Text(NodeOperator.getShortName(nodes.get(i)), false), i+","+2);
-	 		nodesDataset.addItem(new Text(NodeOperator.getAssessedObject(nodes.get(i)), false), i+","+3); 	 	  
-	 		nodesDataset.addItem(NodeOperator.getImpactText(nodes.get(i)), i+","+4); 
-	 		nodesDataset.addItem(NodeOperator.getLikelihoodText(nodes.get(i)), i+","+5); 
-	 		nodesDataset.addItem(NodeOperator.getInherentRiskText(nodes.get(i)), i+","+6);
-	 		nodesDataset.addItem(NodeOperator.getControlLevelText(nodes.get(i)),  i+","+7); 
-	 		nodesDataset.addItem(NodeOperator.getNetRiskText(nodes.get(i)), i+","+8); 
+	 		nodesDataset.addItem(new Text(NodeOperator.getAssessedObject(nodes.get(i)), false), i+","+3); 
+	 		nodesDataset.addItem(new Text("#"+NodeOperator.getAssessedObjectCode(nodes.get(i)), false), i+","+4);
+	 		nodesDataset.addItem(NodeOperator.getImpactText(nodes.get(i)), i+","+5); 
+	 		nodesDataset.addItem(NodeOperator.getLikelihoodText(nodes.get(i)), i+","+6); 
+	 		nodesDataset.addItem(NodeOperator.getInherentRiskText(nodes.get(i)), i+","+7);
+	 		nodesDataset.addItem(NodeOperator.getControlLevelText(nodes.get(i)),  i+","+8); 
+	 		nodesDataset.addItem(NodeOperator.getNetRiskText(nodes.get(i)), i+","+9); 
 	 	   }
 	 	 }
 	 	

@@ -9,6 +9,7 @@ import com.mega.modeling.analysis.content.Text;
 import com.mega.modeling.analysis.content.View;
 import com.mega.modeling.api.MegaCollection;
 import com.mega.modeling.api.MegaObject;
+import com.mega.modeling.api.MegaRoot;
 
 public class NodeOperator {
 	
@@ -28,6 +29,16 @@ public class NodeOperator {
 			if(assessedObjects.size()>0){
 				MegaObject risk=assessedObjects.get(1);
 				return risk.getProp("Short Name");
+			}
+			 return "";
+		}
+		
+		public static String getAssessedObjectCode(MegaObject node){
+			MegaRoot mroot=node.getRoot();
+			MegaCollection assessedObjects= node.getCollection("Assessed Object").filter(mroot.getCollection("Risk").getTypeID());
+			if(assessedObjects.size()>0){
+				MegaObject risk=assessedObjects.get(1);
+				return risk.getProp("Risk Code");
 			}
 			 return "";
 		}
