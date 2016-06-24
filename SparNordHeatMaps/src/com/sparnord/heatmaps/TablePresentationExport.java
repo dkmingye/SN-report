@@ -92,7 +92,9 @@ public class TablePresentationExport {
       int totalLine = 0;
       for (MegaObject mavSecondMetAttribute : this.hMap.getMavSecondMaAttribute()) {
         if (!setTitles) {
-          tex_mavName = this.getTitlesTexts(mavSecondMetAttribute.getProp(GRCMetaAttribut.MA_VALUE_NAME));
+          //tex_mavName = this.getTitlesTexts(mavSecondMetAttribute.getProp(GRCMetaAttribut.MA_VALUE_NAME));
+          //set the horizontal title
+          tex_mavName = this.getTitlesTexts_SN(mavSecondMetAttribute.getProp(GRCMetaAttribut.MA_VALUE_NAME));
           this.heatMapDataset.addItem(tex_mavName, 1 + "," + column);
         }
         String heatMapCellKey = mavFirstMetAttribute.getProp(GRCMetaAttribut.MA_HEX_ID_ABS) + "," + mavSecondMetAttribute.getProp(GRCMetaAttribut.MA_HEX_ID_ABS);
@@ -102,12 +104,12 @@ public class TablePresentationExport {
         if(isFirstHeatMap){
         	//value = new Text("<div  style=\"text-align:center;color:#" + GRCColorsUtility.TITLE_COLOR + ";font-size:11px;font-family:arial;font-weight:bold\"> <b>" + getAssessedRiskCode(hcell) + " </b></div>", false);
         	//value = new Text("<div  style=\"color:#D12800;font-size:11px;font-family:arial;font-weight:bold\"> <b>xxx </b></div>", false);
-        	value = new Text("<table width=\"120\"><tr><td height=\"120\"><center><p align=\"center\">"+getAssessedRiskCode(hcell)+"</p></center><td></tr></table>", false);
+        	value = new Text("<table width=\"60\"><tr><td height=\"120\"><center><p align=\"center\">"+getAssessedRiskCode(hcell)+"</p></center><td></tr></table>", false);
         	
         }else{
         	//value = new Text("<b><center>" + hcell.getValueContexts().size() + "</center></b>", false);
         	//value = new Text("<div  style=\"text-align:center;color:#" + GRCColorsUtility.TITLE_COLOR + ";font-size:11px;font-family:arial;font-weight:bold\"> <b>" + getAssessedRiskCode(hcell) + " </b></div>", false);
-        	value = new Text("<table width=\"120\"><tr><td height=\"120\"><center><p align=\"center\">"+getAssessedRiskCode(hcell)+"</p></center><td></tr></table>", false);
+        	value = new Text("<table width=\"60\"><tr><td height=\"120\"><center><p align=\"center\">"+getAssessedRiskCode(hcell)+"</p></center><td></tr></table>", false);
         	
         }
         //Text value = new Text("<b><center>" + hcell.getValueContexts().size() + "</center></b>", false);
@@ -133,6 +135,7 @@ public class TablePresentationExport {
     this.heatMapDataset.addItem(this.getTitlesTexts(" "), "1," + (this.hMap.getMavSecondMaAttribute().size() + 2));
     Text totalTitle = this.getTitlesTexts(GRCDataProcessing.getCodeTemplate(GRCCodeTemplate.CODE_TEMP_TOTAL, this.mgRoot));
     this.heatMapDataset.addItem(totalTitle, (this.hMap.getMavFirstMaAttribute().size() + 2) + ",1");
+    //set the total number in the horizontal at the bottom line
     this.setTotalColumns();
     Text totalAll = this.getTitlesTexts(" " + String.valueOf(totalValueContexts));
     this.heatMapDataset.addItem(totalAll, (this.hMap.getMavFirstMaAttribute().size() + 2) + "," + (this.hMap.getMavSecondMaAttribute().size() + 2));
@@ -192,7 +195,8 @@ public class TablePresentationExport {
   }
   
   /**
- * 
+ * set the total number in the horizontal at the bottom line
+ * -Ming
  */
   private void setTotalColumns() {
     int ligne = this.hMap.getMavSecondMaAttribute().size() + 2;
@@ -203,7 +207,7 @@ public class TablePresentationExport {
         String heatMapCellKey = mavFirstMetAttribute.getProp(GRCMetaAttribut.MA_HEX_ID_ABS) + "," + mavSecondMetAttribute.getProp(GRCMetaAttribut.MA_HEX_ID_ABS);
         HCell hcell = this.hMap.getMavsMap().get(heatMapCellKey);
         totalColumn = totalColumn + hcell.getValueContexts().size();
-        Text ittotal = this.getTitlesTexts(String.valueOf(totalColumn));
+        Text ittotal = this.getTitlesTexts_SN(String.valueOf(totalColumn));
         this.heatMapDataset.addItem(ittotal, ligne + "," + column);
       }
       column++;
@@ -216,6 +220,18 @@ public class TablePresentationExport {
    */
   private Text getTitlesTexts(final String str) {
     String html_str = "<b><center>" + str + "</center></b>";
+    Text tex_str = new Text(html_str, false);
+    tex_str.isHtml(true);
+    tex_str.getItemRenderer().addParameter("color", GRCColorsUtility.HEATMAP_TITLE);
+    return tex_str;
+  }
+  
+  /**
+   * @param str
+   * @return
+   */
+  private Text getTitlesTexts_SN(final String str) {
+    String html_str = "<table width=\"60\"><tr><td><b><center>" + str + "</center></b><td></tr></table>";
     Text tex_str = new Text(html_str, false);
     tex_str.isHtml(true);
     tex_str.getItemRenderer().addParameter("color", GRCColorsUtility.HEATMAP_TITLE);

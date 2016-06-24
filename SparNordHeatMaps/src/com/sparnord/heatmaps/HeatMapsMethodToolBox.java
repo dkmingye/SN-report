@@ -172,7 +172,7 @@ public class HeatMapsMethodToolBox {
    	 reportContent.addText(nodesTitle); 
    	 
    	 /////////// add Nodes view
-   	 View nodesTableView=NodesView.getView(nSearch.get_Nodes_On_Map(), reportContent);
+   	 View nodesTableView=NodesView.getView(nSearch.get_Nodes_On_Map(), reportContent,isKeyRisk);
    	 reportContent.addView(nodesTableView);
    	 
     } else {
@@ -190,7 +190,7 @@ public class HeatMapsMethodToolBox {
    	 reportContent.addText(nodesTitle); 
    	 
    	 /////////// add Nodes view
-   	 View nodesTableView=NodesView.getExportView(nSearch.get_Nodes_On_Map(), reportContent);
+   	 View nodesTableView=NodesView.getExportView(nSearch.get_Nodes_On_Map(), reportContent,isKeyRisk);
    	 reportContent.addView(nodesTableView);
    
     }

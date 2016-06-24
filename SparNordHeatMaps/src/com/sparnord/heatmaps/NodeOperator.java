@@ -43,7 +43,7 @@ public class NodeOperator {
 			 return "";
 		}
 		
-		public static View getImpact(ReportContent reportContent,MegaObject node){
+		public static View getImpact(ReportContent reportContent,MegaObject node, boolean isKeyRisk){
 			MegaCollection assessedValues=node.getCollection("Assessed Value");
 			if(assessedValues.size()>0){
 				for(MegaObject assessedValue:assessedValues){
@@ -54,7 +54,7 @@ public class NodeOperator {
 							MegaCollection propertyValues=assessedValue.getCollection("Property Value");
 							if(propertyValues.size()>0){
 								MegaObject propertyValue=propertyValues.get(1);
-								return viewGeneration_Color(reportContent,propertyValue.getProp("Value Name"));
+								return viewGeneration_Color_Impact_Likelihood(reportContent,propertyValue.getProp("Value Name"),isKeyRisk);
 							}
 						}
 					}
@@ -64,7 +64,7 @@ public class NodeOperator {
 			return EmptyView(reportContent);
 		}
 		
-		public static Text getImpactText(MegaObject node){	
+		public static Text getImpactText(MegaObject node,boolean isKeyRisk){	
 			MegaCollection assessedValues=node.getCollection("Assessed Value");
 			if(assessedValues.size()>0){
 				for(MegaObject assessedValue:assessedValues){
@@ -77,7 +77,7 @@ public class NodeOperator {
 								MegaObject propertyValue=propertyValues.get(1);
 								String levelName=propertyValue.getProp("Value Name");
 								Text impactText=new Text(levelName,false);
-								impactText.getItemRenderer().addParameter("color", getColorCode(levelName));
+								impactText.getItemRenderer().addParameter("color", isKeyRisk?getColorCodeKeyRisk(levelName):getColorCode(levelName));
 								return impactText;
 							}
 						}
@@ -88,7 +88,7 @@ public class NodeOperator {
 			return new Text("",false);
 		}
 		
-		public static View getLikelihood(ReportContent reportContent,MegaObject node){
+		public static View getLikelihood(ReportContent reportContent,MegaObject node,boolean iskeyRisk){
 			MegaCollection assessedValues=node.getCollection("Assessed Value");
 			if(assessedValues.size()>0){
 				for(MegaObject assessedValue:assessedValues){
@@ -99,7 +99,7 @@ public class NodeOperator {
 							MegaCollection propertyValues=assessedValue.getCollection("Property Value");
 							if(propertyValues.size()>0){
 								MegaObject propertyValue=propertyValues.get(1);
-								return viewGeneration_Color(reportContent,propertyValue.getProp("Value Name"));
+								return viewGeneration_Color_Impact_Likelihood(reportContent,propertyValue.getProp("Value Name"),iskeyRisk);
 							}
 						}
 					}
@@ -109,7 +109,7 @@ public class NodeOperator {
 			return EmptyView(reportContent);
 		}
 		
-		public static Text getLikelihoodText(MegaObject node){
+		public static Text getLikelihoodText(MegaObject node,boolean isKeyRisk){
 			MegaCollection assessedValues=node.getCollection("Assessed Value");
 			if(assessedValues.size()>0){
 				for(MegaObject assessedValue:assessedValues){
@@ -122,7 +122,7 @@ public class NodeOperator {
 								MegaObject propertyValue=propertyValues.get(1);
 								String levelName=propertyValue.getProp("Value Name");
 								Text likelihoodText=new Text(levelName,false);
-								likelihoodText.getItemRenderer().addParameter("color", getColorCode(levelName));
+								likelihoodText.getItemRenderer().addParameter("color", isKeyRisk?getColorCodeKeyRisk(levelName):getColorCode(levelName));
 								return likelihoodText;
 							}
 						}
@@ -282,6 +282,22 @@ public class NodeOperator {
 	     }
 		}
 		
+		private static Image getColorImageKeyRisk(String level){
+			switch (level.toLowerCase()) {
+		      case "very low":  	return new Image("square_g4.gif", level);
+		      case "low": 			return new Image("square_g4.gif", level);
+		      case "medium":  		return new Image("square_g4.gif", level);
+		      case "high":  		return new Image("square_y3.gif", level);
+		      case "very high":  	return new Image("square_r4.gif", level);
+		      case "rare":  		return new Image("square_g4.gif", level);
+		      case "possible": 		return new Image("square_g4.gif", level);
+		      case "likely":  		return new Image("square_g4.gif", level);
+		      case "probable":  	return new Image("square_y3.gif", level);
+		      case "certain":  		return new Image("square_r4.gif", level);
+	        default: 				return new Image("", level);    
+	     }
+		}
+		
 		private static String getColorCode(String level){
 			switch (level.toLowerCase()) {
 	        case "very low":  	return "00FF00";
@@ -298,6 +314,22 @@ public class NodeOperator {
 	        case "strong": 		return "00FF00";
 	        case "weak":  		return "FFFF00";
 	        case "very weak":  	return "FF0000";
+	        default: 			return "";    
+	     }
+		}
+		
+		private static String getColorCodeKeyRisk(String level){
+			switch (level.toLowerCase()) {
+	        case "very low":  	return "00FF00";
+	        case "low": 		return "00FF00";
+	        case "medium":  	return "00FF00";
+	        case "high":  		return "FFFF00";
+	        case "very high":  	return "FF0000";
+	        case "rare":  		return "00FF00";
+	        case "possible": 	return "00FF00";
+	        case "likely":  	return "00FF00";
+	        case "probable":  	return "FFFF00";
+	        case "certain":  	return "FF0000";
 	        default: 			return "";    
 	     }
 		}
@@ -371,6 +403,26 @@ public class NodeOperator {
 		 	 myDataset.addDimension(dimV);
 		 	 myDataset.addDimension(dimH);			 	
 		 	 myDataset.addItem(getColorImage(level), 1+","+1);
+		 	 myDataset.addItem(new Text(level, false), 1+","+2);		 	 
+		 	 final View myView=new View(reportContent.addDataset(myDataset));//id
+		 	 myView.addParameter("borderWidth", "0");
+		 	 myView.addRenderer(AnalysisReportToolbox.rTable);
+		 	 return myView;
+		}
+		
+		private static View viewGeneration_Color_Impact_Likelihood(ReportContent reportContent,String level,boolean isKeyRisk){
+			 final Dataset myDataset=new Dataset("");
+		 	 final Dimension dimV=new Dimension("");
+		 	 final Dimension dimH=new Dimension("");
+		 	 dimV.setSize(1);
+		 	 dimH.setSize(2);
+		 	 myDataset.addDimension(dimV);
+		 	 myDataset.addDimension(dimH);	
+		 	 if(isKeyRisk){
+		 		 myDataset.addItem(getColorImageKeyRisk(level), 1+","+1);
+		 	 }else{
+		 		 myDataset.addItem(getColorImage(level), 1+","+1);
+		 	 }
 		 	 myDataset.addItem(new Text(level, false), 1+","+2);		 	 
 		 	 final View myView=new View(reportContent.addDataset(myDataset));//id
 		 	 myView.addParameter("borderWidth", "0");

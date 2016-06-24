@@ -11,7 +11,7 @@ import com.mega.modeling.api.MegaCollection;
 
 public class NodesView {
 	
-	public static View getView(MegaCollection nodes, ReportContent reportContent){		
+	public static View getView(MegaCollection nodes, ReportContent reportContent, boolean isKeyRisk){		
 		 final Dataset nodesDataset=new Dataset("");	 	 
 	 	 final Dimension dimV=new Dimension("");
 	 	 final Dimension dimH=new Dimension("");
@@ -38,8 +38,8 @@ public class NodesView {
 	 		nodesDataset.addItem(new Text(NodeOperator.getShortName(nodes.get(i)), false), i+","+2);
 	 		nodesDataset.addItem(new Text(NodeOperator.getAssessedObject(nodes.get(i)), false), i+","+3);
 	 		nodesDataset.addItem(new Text("#"+NodeOperator.getAssessedObjectCode(nodes.get(i)), false), i+","+4); 
-	 		nodesDataset.addItem(NodeOperator.getImpact(reportContent,nodes.get(i)), i+","+5); 
-	 		nodesDataset.addItem(NodeOperator.getLikelihood(reportContent,nodes.get(i)), i+","+6); 
+	 		nodesDataset.addItem(NodeOperator.getImpact(reportContent,nodes.get(i),isKeyRisk), i+","+5); 
+	 		nodesDataset.addItem(NodeOperator.getLikelihood(reportContent,nodes.get(i),isKeyRisk), i+","+6); 
 	 		nodesDataset.addItem(NodeOperator.getInherentRisk(reportContent,nodes.get(i)), i+","+7);
 	 		nodesDataset.addItem(NodeOperator.getControlLevel(reportContent,nodes.get(i)),  i+","+8); 
 	 		nodesDataset.addItem(NodeOperator.getNetRisk(reportContent,nodes.get(i)), i+","+9); 
@@ -52,7 +52,7 @@ public class NodesView {
 	 	 return nodesView;
 	}
 	
-	public static View getExportView(MegaCollection nodes, ReportContent reportContent){		
+	public static View getExportView(MegaCollection nodes, ReportContent reportContent,boolean isKeyRisk){		
 		 final Dataset nodesDataset=new Dataset("");	 	 
 	 	 final Dimension dimV=new Dimension("");
 	 	 final Dimension dimH=new Dimension("");
@@ -79,8 +79,8 @@ public class NodesView {
 	 		nodesDataset.addItem(new Text(NodeOperator.getShortName(nodes.get(i)), false), i+","+2);
 	 		nodesDataset.addItem(new Text(NodeOperator.getAssessedObject(nodes.get(i)), false), i+","+3); 
 	 		nodesDataset.addItem(new Text("#"+NodeOperator.getAssessedObjectCode(nodes.get(i)), false), i+","+4);
-	 		nodesDataset.addItem(NodeOperator.getImpactText(nodes.get(i)), i+","+5); 
-	 		nodesDataset.addItem(NodeOperator.getLikelihoodText(nodes.get(i)), i+","+6); 
+	 		nodesDataset.addItem(NodeOperator.getImpactText(nodes.get(i),isKeyRisk), i+","+5); 
+	 		nodesDataset.addItem(NodeOperator.getLikelihoodText(nodes.get(i),isKeyRisk), i+","+6); 
 	 		nodesDataset.addItem(NodeOperator.getInherentRiskText(nodes.get(i)), i+","+7);
 	 		nodesDataset.addItem(NodeOperator.getControlLevelText(nodes.get(i)),  i+","+8); 
 	 		nodesDataset.addItem(NodeOperator.getNetRiskText(nodes.get(i)), i+","+9); 
