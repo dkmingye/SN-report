@@ -20,6 +20,11 @@ public class NodeOperator {
 	public static String getShortName(MegaObject node){
 		return node.getProp("Short Name");
 	}
+	
+	public static String getAbsID(MegaObject node){
+		return node.getProp("Absolute Identifier");
+	}
+	
 	public static String getAbsId(MegaObject node){
 		return node.getProp("Absolute Identifier");
 	}

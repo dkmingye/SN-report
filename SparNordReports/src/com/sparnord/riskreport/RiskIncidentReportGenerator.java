@@ -223,7 +223,11 @@ public class RiskIncidentReportGenerator {
     
     sortRisks_On_RiskCode(riskList);
     sortRisks_On_Entity(riskList);     
-
+    //style view for content
+    //Text css_style=new Text("<style>table {word-wrap:break-word;table-layout: fixed;}</style>", false);
+	//css_style.isHtml(true);
+	//reportContent.addText(css_style);
+	///
     for (MegaObject risk : riskList) {
     	  addRiskView(risk);
     }
@@ -237,6 +241,11 @@ public class RiskIncidentReportGenerator {
   
   private void addRiskView(MegaObject risk){
 	boolean isKeyRisk=RiskOperator.isKeyRisk(risk);
+	Text html_center_begin=new Text("<center>", false);
+	Text html_center_close=new Text("</center>", false);
+	html_center_begin.isHtml(true);
+	html_center_close.isHtml(true);
+	
 	//risk headline 
 	//Text riskHeadline=new Text("<h2 style=\"margin-left:380px;\">Risk #"+RiskOperator.getCode(risk)+"</h2>", false);
 	//riskHeadline.isHtml(true);
@@ -260,34 +269,34 @@ public class RiskIncidentReportGenerator {
 	datasetRisk_part2.addDimension(dimH_part2);
 	
 	dimH_part1.addItem(new Text(" ", false)); 
-	dimH_part1.addItem(styleText_verdana("Code")); 
-	dimH_part1.addItem(styleText_verdana("Name"));
-	dimH_part1.addItem(styleText_verdana("Status")); 
-	dimH_part1.addItem(styleText_verdana("Parent Risk Type"));
-	dimH_part1.addItem(styleText_verdana("Risk Type")); 
-	dimH_part1.addItem(styleText_verdana("Owning Entity"));
-	dimH_part1.addItem(styleText_verdana("Scope"));
-	dimH_part1.addItem(styleText_verdana("Expected Loss")); 
-	dimH_part1.addItem(styleText_verdana("Impact")); 
-	dimH_part1.addItem(styleText_verdana("Likelihood")); 
-	dimH_part2.addItem(styleText_verdana("Comment")); 
-	dimH_part2.addItem(styleText_verdana("Loss Calculation"));
-	dimH_part2.addItem(styleText_verdana("Identification Mode")); 		 	 	 	 	 	  	 	
+	dimH_part1.addItem(styleText_verdana_auto("Code")); 
+	dimH_part1.addItem(styleText_verdana_auto("Name"));
+	dimH_part1.addItem(styleText_verdana_auto("Status")); 
+	dimH_part1.addItem(styleText_verdana_auto("Parent Risk Type"));
+	dimH_part1.addItem(styleText_verdana_auto("Risk Type")); 
+	dimH_part1.addItem(styleText_verdana_auto("Owning Entity"));
+	dimH_part1.addItem(styleText_verdana_auto("Scope"));
+	dimH_part1.addItem(styleText_verdana_auto("Expected Loss")); 
+	dimH_part1.addItem(styleText_verdana_auto("Impact")); 
+	dimH_part1.addItem(styleText_verdana_auto("Likelihood")); 
+	dimH_part2.addItem(styleText_verdana_auto("Comment")); 
+	dimH_part2.addItem(styleText_verdana_auto("Loss Calculation"));
+	dimH_part2.addItem(styleText_verdana_auto("Identification Mode")); 		 	 	 	 	 	  	 	
 	
 	datasetRisk_part1.addItem(new Image("risk.gif","risk.gif"), 1+","+1);
-	datasetRisk_part1.addItem(styleText_verdana("Risk #"+RiskOperator.getCode(risk)), 1+","+2);// risk code
-	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getShortName(risk)), 1+","+3); // Name
-	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getRiskStatus(risk)), 1+","+4); // Status
-	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getParentRiskType(risk)), 1+","+5); // Parent risk type
-	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getRiskType(risk)), 1+","+6);// risk type
-	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getOwningEntity(risk)), 1+","+7);// entity
-	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getElementAtRisk(risk)), 1+","+8);// element at risk
-	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getExpectedLoss(risk)), 1+","+9);//Expected loss
-	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getImpactERM(risk)), 1+","+10);//Impact
-	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getLikeLihood(risk)), 1+","+11);//likelihood
-	datasetRisk_part2.addItem(styleText_verdana(RiskOperator.getComment(risk)), 1+","+1);//comment
-	datasetRisk_part2.addItem(styleText_verdana(RiskOperator.getLossCalculation(risk)), 1+","+2);//Loss Calculation
-	datasetRisk_part2.addItem(styleText_verdana(RiskOperator.getIdentificationMode(risk)), 1+","+3);//Identification mode	
+	datasetRisk_part1.addItem(styleText_verdana_auto("Risk #"+RiskOperator.getCode(risk)), 1+","+2);// risk code
+	datasetRisk_part1.addItem(styleText_verdana_breakWord(RiskOperator.getShortName(risk)), 1+","+3); // Name
+	datasetRisk_part1.addItem(styleText_verdana_auto(RiskOperator.getRiskStatus(risk)), 1+","+4); // Status
+	datasetRisk_part1.addItem(styleText_verdana_breakWord(RiskOperator.getParentRiskType(risk)), 1+","+5); // Parent risk type
+	datasetRisk_part1.addItem(styleText_verdana_breakWord(RiskOperator.getRiskType(risk)), 1+","+6);// risk type
+	datasetRisk_part1.addItem(styleText_verdana_breakWord(RiskOperator.getOwningEntity(risk)), 1+","+7);// entity
+	datasetRisk_part1.addItem(styleText_verdana_breakWord(RiskOperator.getElementAtRisk(risk)), 1+","+8);// element at risk
+	datasetRisk_part1.addItem(styleText_verdana_auto(RiskOperator.getExpectedLoss(risk)), 1+","+9);//Expected loss
+	datasetRisk_part1.addItem(styleText_verdana_auto(RiskOperator.getImpactERM(risk)), 1+","+10);//Impact
+	datasetRisk_part1.addItem(styleText_verdana_auto(RiskOperator.getLikeLihood(risk)), 1+","+11);//likelihood
+	datasetRisk_part2.addItem(styleText_verdana_breakWord(RiskOperator.getComment(risk)), 1+","+1);//comment
+	datasetRisk_part2.addItem(styleText_verdana_breakWord(RiskOperator.getLossCalculation(risk)), 1+","+2);//Loss Calculation
+	datasetRisk_part2.addItem(styleText_verdana_auto(RiskOperator.getIdentificationMode(risk)), 1+","+3);//Identification mode	
 
 	String impactLevel=RiskOperator.getImpactERM(risk);
 	String likelihoodLevel=RiskOperator.getLikeLihood(risk);			
@@ -314,14 +323,15 @@ public class RiskIncidentReportGenerator {
 	 /// add risk view part 1
 	 final View riskView_part1=new View(reportContent.addDataset(datasetRisk_part1));//id
 	 riskView_part1.addParameter("tablewidth", "860");
-	 riskView_part1.addRenderer(AnalysisReportToolbox.rTable);	 
+	 riskView_part1.addRenderer(AnalysisReportToolbox.rTable);	
+	 reportContent.addText(html_center_begin);
 	 reportContent.addView(riskView_part1);
 	 /// add risk view part 2
 	 final View riskView_part2=new View(reportContent.addDataset(datasetRisk_part2));//id
 	 riskView_part2.addParameter("tablewidth", "860");
-	 riskView_part2.addRenderer(AnalysisReportToolbox.rTable);	 
+	 riskView_part2.addRenderer(AnalysisReportToolbox.rTable);
 	 reportContent.addView(riskView_part2);
-	 
+	 reportContent.addText(html_center_close);
 	 //controls title separate line
 	 if(RiskOperator.getPreventiveControl(risk).size()>0){
 		 Text control_separate_line=new Text("<br>", false);
@@ -329,7 +339,9 @@ public class RiskIncidentReportGenerator {
 		 reportContent.addText(control_separate_line); 
 		 /////////// add control view
 		 View ControlTableView=generateViewForControlObjects(risk);
+		 reportContent.addText(html_center_begin);
 	 	 reportContent.addView(ControlTableView);
+	 	 reportContent.addText(html_center_close);
 	 }
 	 //incidents title separate line
 	 if(risk.getCollection(LDCConstants.MAE_RISK_INCIDENT).size()>0){
@@ -338,12 +350,16 @@ public class RiskIncidentReportGenerator {
 	 	 reportContent.addText(incident_separate_line); 
 	 	 /////////// add incident view
 	 	 View incidentTableView_nonNearMiss=generateViewForIncidents(risk,false);
+	 	 reportContent.addText(html_center_begin);
 	 	 reportContent.addView(incidentTableView_nonNearMiss);
+	 	 reportContent.addText(html_center_close);
 	 	 ////sep line	 
 	 	 reportContent.addText(incident_separate_line); 
 	 	 ////
 	 	 View incidentTableView_nearMiss=generateViewForIncidents(risk,true);
+	 	 reportContent.addText(html_center_begin);
 	 	 reportContent.addView(incidentTableView_nearMiss);
+	 	 reportContent.addText(html_center_close);
 	 }
 	 
 	 
@@ -374,19 +390,19 @@ public class RiskIncidentReportGenerator {
 	 	 if(controls.size()>0){	 		 		
 	 		 
 	 		 dimH.addItem(new Text(" ", false));
-	 		 dimH.addItem(styleText_verdana("Code"));
-		 	 dimH.addItem(styleText_verdana("Name"));
-		 	 dimH.addItem(styleText_verdana("Control Objective")); 
-		 	 dimH.addItem(styleText_verdana("Entity Owner"));
-		 	 dimH.addItem(styleText_verdana("Control Nature")); 
+	 		 dimH.addItem(styleText_verdana_auto("Code"));
+		 	 dimH.addItem(styleText_verdana_auto("Name"));
+		 	 dimH.addItem(styleText_verdana_auto("Control Objective")); 
+		 	 dimH.addItem(styleText_verdana_auto("Entity Owner"));
+		 	 dimH.addItem(styleText_verdana_auto("Control Nature")); 
 		 		 	 
 	 	   for (int i=1;i<=controls.size();i++){
 	 		 controlDataset.addItem(new Image("control (grc).gif", "control (grc).gif"), i+","+1);
-	 		 controlDataset.addItem(styleText_verdana("Control #"+ControlOperator.getCode(controls.get(i))), i+","+2);// control code
-		 	 controlDataset.addItem(styleText_verdana(ControlOperator.getShortName(controls.get(i))), i+","+3); // Name		 	  
-		 	 controlDataset.addItem(styleText_verdana(ControlOperator.getControlObjectiv(controls.get(i))), i+","+4); // Control objective
-		 	 controlDataset.addItem(styleText_verdana(ControlOperator.getOwningEntity(controls.get(i))), i+","+5); // owning entity
-		 	 controlDataset.addItem(styleText_verdana(ControlOperator.getControlNature(controls.get(i))), i+","+6);// control nature
+	 		 controlDataset.addItem(styleText_verdana_auto("Control #"+ControlOperator.getCode(controls.get(i))), i+","+2);// control code
+		 	 controlDataset.addItem(styleText_verdana_breakWord(ControlOperator.getShortName(controls.get(i))), i+","+3); // Name		 	  
+		 	 controlDataset.addItem(styleText_verdana_breakWord(ControlOperator.getControlObjectiv(controls.get(i))), i+","+4); // Control objective
+		 	 controlDataset.addItem(styleText_verdana_breakWord(ControlOperator.getOwningEntity(controls.get(i))), i+","+5); // owning entity
+		 	 controlDataset.addItem(styleText_verdana_auto(ControlOperator.getControlNature(controls.get(i))), i+","+6);// control nature
 	 	   }
 	 	 }
 	 	
@@ -458,18 +474,18 @@ public class RiskIncidentReportGenerator {
 		 	 incidentDataset.addDimension(dimH);
 	 		 
 	 		 dimH.addItem(new Text(" ", false));
-	 		 dimH.addItem(styleText_verdana("Code"));
-	 		 dimH.addItem(styleText_verdana("Occurrence Date"));
-	 		 dimH.addItem(styleText_verdana("Near Miss"));
-		 	 dimH.addItem(styleText_verdana("Name"));
-		 	 dimH.addItem(styleText_verdana("Description"));
-		 	 dimH.addItem(styleText_verdana("Parent Risk Type")); 
-		 	 dimH.addItem(styleText_verdana("Risk Type"));
-		 	 dimH.addItem(styleText_verdana("Scope"));//entity connected to the incident
-		 	 dimH.addItem(styleText_verdana("Control Failed")); 
-		 	 dimH.addItem(styleText_verdana("Net Actual Loss"));	
-		 	 dimH.addItem(styleText_verdana("Gross Actual Loss"));	
-		 	 dimH.addItem(styleText_verdana("Recoveries"));	
+	 		 dimH.addItem(styleText_verdana_auto("Code"));
+	 		 dimH.addItem(styleText_verdana_auto("Occurrence Date"));
+	 		 dimH.addItem(styleText_verdana_auto("Near Miss"));
+		 	 dimH.addItem(styleText_verdana_auto("Name"));
+		 	 dimH.addItem(styleText_verdana_auto("Description"));
+		 	 dimH.addItem(styleText_verdana_auto("Parent Risk Type")); 
+		 	 dimH.addItem(styleText_verdana_auto("Risk Type"));
+		 	 dimH.addItem(styleText_verdana_auto("Scope"));//entity connected to the incident
+		 	 dimH.addItem(styleText_verdana_auto("Control Failed")); 
+		 	 dimH.addItem(styleText_verdana_auto("Net Actual Loss"));	
+		 	 dimH.addItem(styleText_verdana_auto("Gross Actual Loss"));	
+		 	 dimH.addItem(styleText_verdana_auto("Recoveries"));	
 		 	 
 	 	   for (int i=1;i<=filteredIncidents.size();i++){
 	 		 
@@ -479,21 +495,21 @@ public class RiskIncidentReportGenerator {
 	 		}else{
 	 			incidentDataset.addItem(new Image("incident (bizcon).gif", "incident (bizcon).gif"), i+","+1);// icon image
 	 		}
-	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getCode(filteredIncidents.get(i))), i+","+2);// code
-	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getDate(filteredIncidents.get(i))), i+","+3);// Date
-	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getNearMiss(filteredIncidents.get(i))), i+","+4);// Near Miss
-	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getName(filteredIncidents.get(i))), i+","+5);// Name
-	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getComment(filteredIncidents.get(i))), i+","+6);// comment
-	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getParentRiskType(filteredIncidents.get(i))), i+","+7);// Parent Risk Type
-	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getRiskType(filteredIncidents.get(i))), i+","+8);// Risk Type
-	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getEntity(filteredIncidents.get(i))), i+","+9);// entity
-	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getControl(filteredIncidents.get(i))), i+","+10);// Control Failed
+	 		incidentDataset.addItem(styleText_verdana_auto(IncidentOperator.getCode(filteredIncidents.get(i))), i+","+2);// code
+	 		incidentDataset.addItem(styleText_verdana_auto(IncidentOperator.getDate(filteredIncidents.get(i))), i+","+3);// Date
+	 		incidentDataset.addItem(styleText_verdana_auto(IncidentOperator.getNearMiss(filteredIncidents.get(i))), i+","+4);// Near Miss
+	 		incidentDataset.addItem(styleText_verdana_breakWord(IncidentOperator.getName(filteredIncidents.get(i))), i+","+5);// Name
+	 		incidentDataset.addItem(styleText_verdana_breakWord(IncidentOperator.getComment(filteredIncidents.get(i))), i+","+6);// comment
+	 		incidentDataset.addItem(styleText_verdana_breakWord(IncidentOperator.getParentRiskType(filteredIncidents.get(i))), i+","+7);// Parent Risk Type
+	 		incidentDataset.addItem(styleText_verdana_breakWord(IncidentOperator.getRiskType(filteredIncidents.get(i))), i+","+8);// Risk Type
+	 		incidentDataset.addItem(styleText_verdana_breakWord(IncidentOperator.getEntity(filteredIncidents.get(i))), i+","+9);// entity
+	 		incidentDataset.addItem(styleText_verdana_auto(IncidentOperator.getControl(filteredIncidents.get(i))), i+","+10);// Control Failed
 	 		//incidentDataset.addItem(new Value(IncidentOperator.getNetActualLoss(filteredIncidents.get(i)), userCurrencyId),i+","+11);// Net Actual Loss
 	 		//incidentDataset.addItem(new Value(IncidentOperator.getGrossActualLoss(filteredIncidents.get(i)), userCurrencyId), i+","+12);// Gross Actual Loss
 	 		//incidentDataset.addItem(new Value(IncidentOperator.getRecoveries(filteredIncidents.get(i)), userCurrencyId), i+","+13);// Recoveries
-	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getNetActualLossString(filteredIncidents.get(i))),i+","+11);// Net Actual Loss
-	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getGrossActualLossString(filteredIncidents.get(i))), i+","+12);// Gross Actual Loss
-	 		incidentDataset.addItem(styleText_verdana(IncidentOperator.getRecoveriesString(filteredIncidents.get(i))), i+","+13);// Recoveries
+	 		incidentDataset.addItem(styleText_verdana_auto(IncidentOperator.getNetActualLossString(filteredIncidents.get(i))),i+","+11);// Net Actual Loss
+	 		incidentDataset.addItem(styleText_verdana_auto(IncidentOperator.getGrossActualLossString(filteredIncidents.get(i))), i+","+12);// Gross Actual Loss
+	 		incidentDataset.addItem(styleText_verdana_auto(IncidentOperator.getRecoveriesString(filteredIncidents.get(i))), i+","+13);// Recoveries
 	 		
 	 		
 	 		 grossActualLoss += Double.parseDouble(filteredIncidents.get(i).getProp(LDCConstants.MA_GROSS_ACTUAL_LOSS_LOCAL, "Internal").toString());
@@ -511,10 +527,10 @@ public class RiskIncidentReportGenerator {
 		      String recoveriesString=currency+" "+formatter2.format(recoveries);
 		      String netActualLossString=currency+" "+formatter2.format(netActualLoss);
 		      ///////////////////////
-		      incidentDataset.addItem(styleText_verdana("Sum"),filteredIncidents.size()+1+","+1);
-		      incidentDataset.addItem(styleText_verdana(netActualLossString),filteredIncidents.size()+1+","+11);
-		      incidentDataset.addItem(styleText_verdana(grossActualLossString),filteredIncidents.size()+1+","+12);
-		      incidentDataset.addItem(styleText_verdana(recoveriesString),filteredIncidents.size()+1+","+13);
+		      incidentDataset.addItem(styleText_verdana_auto("Sum"),filteredIncidents.size()+1+","+1);
+		      incidentDataset.addItem(styleText_verdana_auto(netActualLossString),filteredIncidents.size()+1+","+11);
+		      incidentDataset.addItem(styleText_verdana_auto(grossActualLossString),filteredIncidents.size()+1+","+12);
+		      incidentDataset.addItem(styleText_verdana_auto(recoveriesString),filteredIncidents.size()+1+","+13);
 		 	  /////////////
 		      
 		      final View incidentView=new View(reportContent.addDataset(incidentDataset));//id
@@ -528,7 +544,7 @@ public class RiskIncidentReportGenerator {
 	}
   
   private Text textGeneration_Color(String level,boolean isKeyRisk){
-		Text levelText=styleText_verdana(level);
+		Text levelText=styleText_verdana_auto(level);
 		if(isKeyRisk){
 			levelText.getItemRenderer().addParameter("color",ColorCode.getColorCodeFromText_KeyRisk(level));
 		}else{
@@ -552,7 +568,7 @@ public class RiskIncidentReportGenerator {
 	 		myDataset.addItem(getColorImage(level), 1+","+1);
 	 		}
 	 	
-	 	myDataset.addItem(styleText_verdana(level), 1+","+2);
+	 	myDataset.addItem(styleText_verdana_auto(level), 1+","+2);
 	 	 
 	 	 final View myView=new View(reportContent.addDataset(myDataset));//id
 	 	 myView.addParameter("borderWidth", "0");
@@ -592,11 +608,23 @@ public class RiskIncidentReportGenerator {
 		}
 	}
 	
-	private Text styleText_verdana(String text){
-		Text styleText=new Text("<p style=\"word-wrap:break-word;margin:0;font-family:verdana;font-size:9px;\">"+text+"</p>", false);
+	private Text styleText_verdana_breakWord(String text){
+		//Text styleText=new Text("<table style=\"width:100%;table-layout:fixed;\"><tr><td><p style=\"word-wrap:break-all;margin:0;font-family:verdana;font-size:9px;\">"+text+"</p></td><tr></table>", false);
+		//Text styleText=new Text("<p style=\"word-break: break-all;background:gold;border: 1px solid #000000;margin:0;font-family:verdana;font-size:9px;\">"+text+"</p>", false);
+		//String style="width:60px;table-layout:fixed;overflow-wrap: break-word;word-wrap:break-word;-ms-word-break: break-all;word-break: break-word;word-wrap:break-all;-ms-hyphens: auto;-moz-hyphens: auto;-webkit-hyphens: auto;hyphens: auto;margin:0;font-family:verdana;font-size:9px;";
+		//String style2="width:60px;table-layout:fixed;";
+		//Text styleText=new Text("<table style=\""+""+"\"><tr><td><span style=\"display:block;width:60px;word-wrap:break-word;white-space:normal;\">"+text+"</span></td><tr></table>", false);
+		Text styleText=new Text("<p style=\"word-break:break-all;margin:0;font-family:verdana;font-size:9px;\">"+text+"</p>", false);
 		styleText.isHtml(true);
 	 	return styleText;
 	}
+	
+	private Text styleText_verdana_auto(String text){
+		Text styleText=new Text("<p style=\"margin:0;font-family:verdana;font-size:9px;\">"+text+"</p>", false);
+		styleText.isHtml(true);
+	 	return styleText;
+	}
+	
 
 	public static MegaCollection getRisks_From_OwningEntity_v2(final MegaRoot root, MegaCollection orgUnits) {   
 	    MegaCollection allRisks=root.getSelection("");

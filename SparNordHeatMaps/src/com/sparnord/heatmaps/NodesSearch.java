@@ -1,5 +1,6 @@
 package com.sparnord.heatmaps;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -38,6 +39,7 @@ public class NodesSearch {
   public MegaCollection get_Nodes_On_Map(){
 	  return nodes_on_map;
   }
+  
 
   public void setValueContexts(MegaRoot root,final Hmap _inherentRisk, final Hmap _netRisk, final MegaCollection risks, final IdentificationParameters identificationParameters) {
     this.nodes_on_map=root.getSelection("");

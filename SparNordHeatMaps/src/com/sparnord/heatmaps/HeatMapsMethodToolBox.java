@@ -7,6 +7,7 @@ import java.util.Map;
 import com.mega.modeling.analysis.AnalysisReportToolbox;
 import com.mega.modeling.analysis.content.Dataset;
 import com.mega.modeling.analysis.content.Dimension;
+import com.mega.modeling.analysis.content.Image;
 import com.mega.modeling.analysis.content.ReportContent;
 import com.mega.modeling.analysis.content.Text;
 import com.mega.modeling.analysis.content.View;
@@ -140,6 +141,7 @@ public class HeatMapsMethodToolBox {
     View v_tableInherentRisk;
     View v_tableNetRisk;
     if (isHtml) {
+      ///////////////////
       Dataset globalDataSet = new Dataset("");
       View globalView = this.getReportView(reportContent, globalDataSet);
       reportContent.addView(globalView);
@@ -172,10 +174,14 @@ public class HeatMapsMethodToolBox {
    	 reportContent.addText(nodesTitle); 
    	 
    	 /////////// add Nodes view
+   	 //View nodesTableView=NodesView.getView(nSearch.get_Nodes_On_Map(), reportContent,isKeyRisk);
    	 View nodesTableView=NodesView.getView(nSearch.get_Nodes_On_Map(), reportContent,isKeyRisk);
+   	 //checkNodes(nSearch.get_Nodes_On_Map(),reportContent);
    	 reportContent.addView(nodesTableView);
    	 
     } else {
+      
+      /////
       TablePresentationExport tableInherentRisk = new TablePresentationExport();
       v_tableInherentRisk = tableInherentRisk.createReportTable(root, reportContent, inherentRiskMap,isKeyRisk,true);
       TablePresentationExport tableNetRisk = new TablePresentationExport();
@@ -194,6 +200,16 @@ public class HeatMapsMethodToolBox {
    	 reportContent.addView(nodesTableView);
    
     }
+  }
+  
+  private static void checkNodes(MegaCollection nodes, ReportContent reportContent){
+	   for (int i=1;i<=nodes.size();i++){
+		   
+		    reportContent.addText(new Text("#"+NodeOperator.getAssessedObjectCode(nodes.get(i)), false)); 
+		    reportContent.addText(new Text("#"+NodeOperator.getAbsID(nodes.get(i)), false)); 
+		    
+	 	   }
+	  
   }
 
   public static MegaCollection getRisks(final MegaRoot root, final IdentificationParameters idParameters) {

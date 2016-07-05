@@ -87,7 +87,7 @@ public class TablePresentationExport {
 	        } 
     	}   	
       Text tex_mavName = this.getTitlesTexts(scaleTitle);
-           
+      //Text tex_mavName = new Text(scaleTitle,false);    
       this.heatMapDataset.addItem(tex_mavName, ligne + ",1");
       int totalLine = 0;
       for (MegaObject mavSecondMetAttribute : this.hMap.getMavSecondMaAttribute()) {

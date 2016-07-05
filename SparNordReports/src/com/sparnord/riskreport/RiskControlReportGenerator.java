@@ -24,6 +24,10 @@ public class RiskControlReportGenerator {
 	}
 	
 	public ReportContent getReportRiskControl(){
+		Text html_center_begin=new Text("<center>", false);
+		Text html_center_close=new Text("</center>", false);
+		html_center_begin.isHtml(true);
+		html_center_close.isHtml(true);
 		
 		 for(MegaObject risk : risks){
 			 boolean isKeyRisk=RiskOperator.isKeyRisk(risk);
@@ -49,36 +53,36 @@ public class RiskControlReportGenerator {
 	 	datasetRisk_part2.addDimension(dimV_part2);
 	 	datasetRisk_part2.addDimension(dimH_part2);
 	 	
-	 	dimH_part1.addItem(styleText_verdana(" ")); 
-	 	dimH_part1.addItem(styleText_verdana("Code")); 
-	 	dimH_part1.addItem(styleText_verdana("Name"));
-	 	dimH_part1.addItem(styleText_verdana("Status")); 
-	 	dimH_part1.addItem(styleText_verdana("Parent Risk Type"));
-	 	dimH_part1.addItem(styleText_verdana("Risk Type")); 
-	 	dimH_part1.addItem(styleText_verdana("Owning Entity"));
-	 	dimH_part1.addItem(styleText_verdana("Scope"));// element at risk
-	 	dimH_part1.addItem(styleText_verdana("Expected Loss")); 
-	 	dimH_part1.addItem(styleText_verdana("Impact")); 
-	 	dimH_part1.addItem(styleText_verdana("Likelihood")); 
-	 	dimH_part2.addItem(styleText_verdana("Comment")); 
-	 	dimH_part2.addItem(styleText_verdana("Loss Calculation"));
-	 	dimH_part2.addItem(styleText_verdana("Identification Mode")); 		 	 	 	 	 	 	  	 	
+	 	dimH_part1.addItem(styleText_verdana_auto(" ")); 
+	 	dimH_part1.addItem(styleText_verdana_auto("Code")); 
+	 	dimH_part1.addItem(styleText_verdana_auto("Name"));
+	 	dimH_part1.addItem(styleText_verdana_auto("Status")); 
+	 	dimH_part1.addItem(styleText_verdana_auto("Parent Risk Type"));
+	 	dimH_part1.addItem(styleText_verdana_auto("Risk Type")); 
+	 	dimH_part1.addItem(styleText_verdana_auto("Owning Entity"));
+	 	dimH_part1.addItem(styleText_verdana_auto("Scope"));// element at risk
+	 	dimH_part1.addItem(styleText_verdana_auto("Expected Loss")); 
+	 	dimH_part1.addItem(styleText_verdana_auto("Impact")); 
+	 	dimH_part1.addItem(styleText_verdana_auto("Likelihood")); 
+	 	dimH_part2.addItem(styleText_verdana_auto("Comment")); 
+	 	dimH_part2.addItem(styleText_verdana_auto("Loss Calculation"));
+	 	dimH_part2.addItem(styleText_verdana_auto("Identification Mode")); 		 	 	 	 	 	 	  	 	
 	 	
 	 	datasetRisk_part1.addItem(new Image("risk.gif", "riskgif"), 1+","+1);
-	 	datasetRisk_part1.addItem(styleText_verdana("Risk #"+RiskOperator.getCode(risk)), 1+","+2);// risk code
-	 	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getShortName(risk)), 1+","+3); // Name
-	 	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getRiskStatus(risk)), 1+","+4); // Status
-	 	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getParentRiskType(risk)), 1+","+5); // Parent risk type
-	 	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getRiskType(risk)), 1+","+6);// risk type
-	 	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getOwningEntity(risk)), 1+","+7);// entity
-	 	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getElementAtRisk(risk)), 1+","+8);// element at risk
-	 	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getExpectedLoss(risk)), 1+","+9);//Expected loss
-	 	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getImpactERM(risk)), 1+","+10);//Impact
-	 	datasetRisk_part1.addItem(styleText_verdana(RiskOperator.getLikeLihood(risk)), 1+","+11);//likelihood
+	 	datasetRisk_part1.addItem(styleText_verdana_auto("Risk #"+RiskOperator.getCode(risk)), 1+","+2);// risk code
+	 	datasetRisk_part1.addItem(styleText_verdana_breakWord(RiskOperator.getShortName(risk)), 1+","+3); // Name
+	 	datasetRisk_part1.addItem(styleText_verdana_auto(RiskOperator.getRiskStatus(risk)), 1+","+4); // Status
+	 	datasetRisk_part1.addItem(styleText_verdana_breakWord(RiskOperator.getParentRiskType(risk)), 1+","+5); // Parent risk type
+	 	datasetRisk_part1.addItem(styleText_verdana_breakWord(RiskOperator.getRiskType(risk)), 1+","+6);// risk type
+	 	datasetRisk_part1.addItem(styleText_verdana_breakWord(RiskOperator.getOwningEntity(risk)), 1+","+7);// entity
+	 	datasetRisk_part1.addItem(styleText_verdana_breakWord(RiskOperator.getElementAtRisk(risk)), 1+","+8);// element at risk
+	 	datasetRisk_part1.addItem(styleText_verdana_auto(RiskOperator.getExpectedLoss(risk)), 1+","+9);//Expected loss
+	 	datasetRisk_part1.addItem(styleText_verdana_auto(RiskOperator.getImpactERM(risk)), 1+","+10);//Impact
+	 	datasetRisk_part1.addItem(styleText_verdana_auto(RiskOperator.getLikeLihood(risk)), 1+","+11);//likelihood
 	 	////part 2 
-	 	datasetRisk_part2.addItem(styleText_verdana(RiskOperator.getComment(risk)), 1+","+1);//comment
-	 	datasetRisk_part2.addItem(styleText_verdana(RiskOperator.getLossCalculation(risk)), 1+","+2);//Loss Calculation
-	 	datasetRisk_part2.addItem(styleText_verdana(RiskOperator.getIdentificationMode(risk)), 1+","+3);//Identification mode	
+	 	datasetRisk_part2.addItem(styleText_verdana_breakWord(RiskOperator.getComment(risk)), 1+","+1);//comment
+	 	datasetRisk_part2.addItem(styleText_verdana_breakWord(RiskOperator.getLossCalculation(risk)), 1+","+2);//Loss Calculation
+	 	datasetRisk_part2.addItem(styleText_verdana_auto(RiskOperator.getIdentificationMode(risk)), 1+","+3);//Identification mode	
 	 	
 	 
 	 	String impactLevel=RiskOperator.getImpactERM(risk);
@@ -105,13 +109,15 @@ public class RiskControlReportGenerator {
 	 	 /// add risk view part 1
 	 	 final View riskView_part1=new View(reportContent.addDataset(datasetRisk_part1));//id
 	 	 riskView_part1.addParameter("tablewidth", "860");
-	 	 riskView_part1.addRenderer(AnalysisReportToolbox.rTable);	 
+	 	 riskView_part1.addRenderer(AnalysisReportToolbox.rTable);	
+	 	 reportContent.addText(html_center_begin);
 	 	 reportContent.addView(riskView_part1);
 	 	 /// add risk view part 2
 	 	 final View riskView_part2=new View(reportContent.addDataset(datasetRisk_part2));//id
-	 	riskView_part2.addParameter("tablewidth", "860");
-	 	riskView_part2.addRenderer(AnalysisReportToolbox.rTable);	 
+	 	 riskView_part2.addParameter("tablewidth", "860");
+	 	 riskView_part2.addRenderer(AnalysisReportToolbox.rTable);
 	 	 reportContent.addView(riskView_part2);
+	 	 reportContent.addText(html_center_close);
 	 	 
 	 	 //control title separate line
 	 	 if(RiskOperator.getPreventiveControl(risk).size()>0){
@@ -120,7 +126,9 @@ public class RiskControlReportGenerator {
 		 	 reportContent.addText(controlTitle); 
 		 	 ///////////
 		 	 View ControlTableView=generateViewForControlObjects(risk);
+		 	 reportContent.addText(html_center_begin);
 		 	 reportContent.addView(ControlTableView);
+		 	 reportContent.addText(html_center_close);
 	 	 }
 	 	 //start separate line, ending one risk here
 	 	 Text sepLine=new Text("<br><center>****************************************************************************</center><br>", false);
@@ -150,20 +158,20 @@ public class RiskControlReportGenerator {
 	 
 	 	 if(controls.size()>0){	 		 		
 	 		 
-	 		 dimH.addItem(styleText_verdana(" "));
-	 		 dimH.addItem(styleText_verdana("Code"));
-		 	 dimH.addItem(styleText_verdana("Name"));
-		 	 dimH.addItem(styleText_verdana("Control Objective")); 
-		 	 dimH.addItem(styleText_verdana("Entity Owner"));
-		 	 dimH.addItem(styleText_verdana("Control Nature")); 
+	 		 dimH.addItem(styleText_verdana_auto(" "));
+	 		 dimH.addItem(styleText_verdana_auto("Code"));
+		 	 dimH.addItem(styleText_verdana_auto("Name"));
+		 	 dimH.addItem(styleText_verdana_auto("Control Objective")); 
+		 	 dimH.addItem(styleText_verdana_auto("Entity Owner"));
+		 	 dimH.addItem(styleText_verdana_auto("Control Nature")); 
 		 		 	 
 	 	   for (int i=1;i<=controls.size();i++){
 	 		 controlDataset.addItem(new Image("control (grc).gif", "control (grc).gif"), i+","+1);
-	 		 controlDataset.addItem(styleText_verdana("Control #"+ControlOperator.getCode(controls.get(i))), i+","+2);// control code
-		 	 controlDataset.addItem(styleText_verdana(ControlOperator.getShortName(controls.get(i))), i+","+3); // Name		 	  
-		 	 controlDataset.addItem(styleText_verdana(ControlOperator.getControlObjectiv(controls.get(i))), i+","+4); // Control objective
-		 	 controlDataset.addItem(styleText_verdana(ControlOperator.getOwningEntity(controls.get(i))), i+","+5); // owning entity
-		 	 controlDataset.addItem(styleText_verdana(ControlOperator.getControlNature(controls.get(i))), i+","+6);// control nature
+	 		 controlDataset.addItem(styleText_verdana_auto("Control #"+ControlOperator.getCode(controls.get(i))), i+","+2);// control code
+		 	 controlDataset.addItem(styleText_verdana_breakWord(ControlOperator.getShortName(controls.get(i))), i+","+3); // Name		 	  
+		 	 controlDataset.addItem(styleText_verdana_breakWord(ControlOperator.getControlObjectiv(controls.get(i))), i+","+4); // Control objective
+		 	 controlDataset.addItem(styleText_verdana_breakWord(ControlOperator.getOwningEntity(controls.get(i))), i+","+5); // owning entity
+		 	 controlDataset.addItem(styleText_verdana_auto(ControlOperator.getControlNature(controls.get(i))), i+","+6);// control nature
 	 	   }
 	 	 }
 	 	
@@ -189,7 +197,7 @@ public class RiskControlReportGenerator {
 	 		myDataset.addItem(getColorImage(level), 1+","+1);
 	 	}
 	 	
-	 	myDataset.addItem(styleText_verdana(level), 1+","+2);
+	 	myDataset.addItem(styleText_verdana_auto(level), 1+","+2);
 	 	 
 	 	 final View myView=new View(reportContent.addDataset(myDataset));//id
 	 	 myView.addParameter("borderWidth", "0");
@@ -198,7 +206,7 @@ public class RiskControlReportGenerator {
 	}
 	
 	  private Text textGeneration_Color(String level,boolean isKeyRisk){
-			Text levelText=styleText_verdana(level);
+			Text levelText=styleText_verdana_auto(level);
 			if(isKeyRisk){
 				levelText.getItemRenderer().addParameter("color", ColorCode.getColorCodeFromText_KeyRisk(level));
 			}else{
@@ -241,17 +249,14 @@ public class RiskControlReportGenerator {
      }
 	}
 	
-/*	
-	private Text styleText_verdana(String text,int width){
-		String tableStartTxt="<table width=\""+width+"\"><tr><td>";
-		String tableEndTxt="</td></tr></table>";
-		Text styleText=new Text(tableStartTxt+"<p style=\"word-wrap:break-word;margin:0;font-family:verdana;font-size:9px;\">"+text+"</p>"+tableEndTxt, false);
+	private Text styleText_verdana_breakWord(String text){
+		Text styleText=new Text("<p style=\"word-break:break-all;margin:0;font-family:verdana;font-size:9px;\">"+text+"</p>", false);
 		styleText.isHtml(true);
 	 	return styleText;
-	}*/
+	}
 	
-	private Text styleText_verdana(String text){				
-		Text styleText=new Text("<p style=\"word-wrap:break-word;margin:0;font-family:verdana;font-size:9px;\">"+text+"</p>", false);
+	private Text styleText_verdana_auto(String text){
+		Text styleText=new Text("<p style=\"margin:0;font-family:verdana;font-size:9px;\">"+text+"</p>", false);
 		styleText.isHtml(true);
 	 	return styleText;
 	}
