@@ -246,10 +246,6 @@ public class RiskIncidentReportGenerator {
 	html_center_begin.isHtml(true);
 	html_center_close.isHtml(true);
 	
-	//risk headline 
-	//Text riskHeadline=new Text("<h2 style=\"margin-left:380px;\">Risk #"+RiskOperator.getCode(risk)+"</h2>", false);
-	//riskHeadline.isHtml(true);
-	//reportContent.addText(riskHeadline); 
 	 ///////////
 	final Dataset datasetRisk_part1=new Dataset(""); // for the first 9 attributes
 	final Dataset datasetRisk_part2=new Dataset(""); // for the rest attributes
@@ -308,15 +304,20 @@ public class RiskIncidentReportGenerator {
 		 
 		 if(isHtml){
 			////impact erm text and img
-			datasetRisk_part1.addItem(viewGeneration_Color(impactLevel,isKeyRisk), 1+","+10); 
+			//datasetRisk_part1.addItem(viewGeneration_Color(impactLevel,isKeyRisk), 1+","+10); 
+			datasetRisk_part1.addItem(viewGeneration_Color_On_Heatmap(impactLevel,likelihoodLevel,isKeyRisk,true), 1+","+10); 
 			////likelihood text and img
-			datasetRisk_part1.addItem(viewGeneration_Color(likelihoodLevel,isKeyRisk), 1+","+11);
-			
+			//datasetRisk_part1.addItem(viewGeneration_Color(likelihoodLevel,isKeyRisk), 1+","+11);
+			datasetRisk_part1.addItem(viewGeneration_Color_On_Heatmap(impactLevel,likelihoodLevel,isKeyRisk,false), 1+","+11); 
 		 } else {
 			////impact erm text with background color
-			datasetRisk_part1.addItem(textGeneration_Color(impactLevel,isKeyRisk), 1+","+10); 
+			//datasetRisk_part1.addItem(textGeneration_Color(impactLevel,isKeyRisk), 1+","+10); 
+			datasetRisk_part1.addItem(textGeneration_Color_On_Heatmap(impactLevel,likelihoodLevel,isKeyRisk,true), 1+","+10); 
+ 			
 			////likelihood text with background color
-			datasetRisk_part1.addItem(textGeneration_Color(likelihoodLevel,isKeyRisk), 1+","+11);
+			//datasetRisk_part1.addItem(textGeneration_Color(likelihoodLevel,isKeyRisk), 1+","+11);
+			datasetRisk_part1.addItem(textGeneration_Color_On_Heatmap(impactLevel,likelihoodLevel,isKeyRisk,false), 1+","+11); 
+	 		
 		 }
 	 		 	
 	
@@ -326,10 +327,12 @@ public class RiskIncidentReportGenerator {
 	 riskView_part1.addRenderer(AnalysisReportToolbox.rTable);	
 	 reportContent.addText(html_center_begin);
 	 reportContent.addView(riskView_part1);
+	 reportContent.addText(html_center_close);
 	 /// add risk view part 2
 	 final View riskView_part2=new View(reportContent.addDataset(datasetRisk_part2));//id
 	 riskView_part2.addParameter("tablewidth", "860");
 	 riskView_part2.addRenderer(AnalysisReportToolbox.rTable);
+	 reportContent.addText(html_center_begin);
 	 reportContent.addView(riskView_part2);
 	 reportContent.addText(html_center_close);
 	 //controls title separate line
@@ -542,6 +545,16 @@ public class RiskIncidentReportGenerator {
 	 		  return null;
 	 	 }
 	}
+  private Text textGeneration_Color_On_Heatmap(String impact_level,String likelihood_level,boolean isKeyRisk,boolean flag){
+		Text levelText=flag?styleText_verdana_auto(impact_level):styleText_verdana_auto(likelihood_level);
+		if(isKeyRisk){
+			levelText.getItemRenderer().addParameter("color", ColorCode.getColorCodeFromText_On_Heatmap_KeyRisk(impact_level,likelihood_level));
+		}else{
+			levelText.getItemRenderer().addParameter("color", ColorCode.getColorCodeFromText_On_Heatmap(impact_level,likelihood_level));
+		}
+		
+		return levelText;
+	}
   
   private Text textGeneration_Color(String level,boolean isKeyRisk){
 		Text levelText=styleText_verdana_auto(level);
@@ -552,6 +565,32 @@ public class RiskIncidentReportGenerator {
 		}
 		
 		return levelText;
+	}
+  
+	private View viewGeneration_Color_On_Heatmap(String impact_level,String likelihood_level,boolean isKeyRisk, boolean flag){
+		 final Dataset myDataset=new Dataset("");
+	 	 final Dimension dimV=new Dimension("");
+	 	 final Dimension dimH=new Dimension("");
+	 	 dimV.setSize(1);
+	 	 dimH.setSize(2);
+	 	myDataset.addDimension(dimV);
+	 	myDataset.addDimension(dimH);
+	 	String level=flag?impact_level:likelihood_level;
+	 	
+	 	if(isKeyRisk){
+	 		//myDataset.addItem(getColorImageKeyRisk(level), 1+","+1);
+	 		myDataset.addItem(getColorImage_Heatmap_KeyRisk(impact_level,likelihood_level), 1+","+1);
+	 	}else {
+	 		//myDataset.addItem(getColorImage(level), 1+","+1);
+	 		myDataset.addItem(getColorImage_Heatmap(impact_level,likelihood_level), 1+","+1);
+	 	}
+	 	
+	 	myDataset.addItem(styleText_verdana_auto(level), 1+","+2);
+	 	 
+	 	 final View myView=new View(reportContent.addDataset(myDataset));//id
+	 	 myView.addParameter("borderWidth", "0");
+	 	 myView.addRenderer(AnalysisReportToolbox.rTable);
+	 	 return myView;
 	}
   
   private View viewGeneration_Color(String level,boolean isKeyRisk){
@@ -575,6 +614,83 @@ public class RiskIncidentReportGenerator {
 	 	 myView.addRenderer(AnalysisReportToolbox.rTable);
 	 	 return myView;
 	}
+  
+	private Image getColorImage_Heatmap(String impact_level,String likelihood_level){
+		
+		switch (impact_level.toLowerCase()+","+likelihood_level.toLowerCase()) {
+		
+			case "very high,rare":			return new Image("square_y3.gif", "");
+			case "very high,possible":		return new Image("square_y3.gif", "");
+			case "very high,likely":		return new Image("square_y3.gif", "");
+			case "very high,probable":		return new Image("square_r4.gif", "");
+			case "very high,certain":		return new Image("square_r4.gif", "");
+			
+			case "high,rare":				return new Image("square_g4.gif", "");
+			case "high,possible":			return new Image("square_y3.gif", "");
+			case "high,likely":				return new Image("square_y3.gif", "");
+			case "high,probable":			return new Image("square_y3.gif", "");
+			case "high,certain":			return new Image("square_r4.gif", "");
+			
+			case "medium,rare":				return new Image("square_g4.gif", "");
+			case "medium,possible":			return new Image("square_g4.gif", "");
+			case "medium,likely":			return new Image("square_y3.gif", "");
+			case "medium,probable":			return new Image("square_y3.gif", "");
+			case "medium,certain":			return new Image("square_y3.gif", "");
+			
+			case "low,rare":				return new Image("square_g4.gif", "");
+			case "low,possible":			return new Image("square_g4.gif", "");
+			case "low,likely":				return new Image("square_g4.gif", "");
+			case "low,probable":			return new Image("square_g4.gif", "");
+			case "low,certain":				return new Image("square_y3.gif", "");
+			
+			case "very low,rare":			return new Image("square_g4.gif", "");
+			case "very low,possible":		return new Image("square_g4.gif", "");
+			case "very low,likely":			return new Image("square_g4.gif", "");
+			case "very low,probable":		return new Image("square_g4.gif", "");
+			case "very low,certain":		return new Image("square_g4.gif", "");
+	        default: 						return new Image("", "");
+		}
+
+	}
+
+private Image getColorImage_Heatmap_KeyRisk(String impact_level,String likelihood_level){
+	
+	switch (impact_level.toLowerCase()+","+likelihood_level.toLowerCase()) {
+	
+		case "very high,rare":			return new Image("square_g4.gif", "");
+		case "very high,possible":		return new Image("square_y3.gif", "");
+		case "very high,likely":		return new Image("square_y3.gif", "");
+		case "very high,probable":		return new Image("square_r4.gif", "");
+		case "very high,certain":		return new Image("square_r4.gif", "");
+		
+		case "high,rare":				return new Image("square_g4.gif", "");
+		case "high,possible":			return new Image("square_g4.gif", "");
+		case "high,likely":				return new Image("square_y3.gif", "");
+		case "high,probable":			return new Image("square_y3.gif", "");
+		case "high,certain":			return new Image("square_r4.gif", "");
+		
+		case "medium,rare":				return new Image("square_g4.gif", "");
+		case "medium,possible":			return new Image("square_g4.gif", "");
+		case "medium,likely":			return new Image("square_g4.gif", "");
+		case "medium,probable":			return new Image("square_y3.gif", "");
+		case "medium,certain":			return new Image("square_y3.gif", "");
+		
+		case "low,rare":				return new Image("square_g4.gif", "");
+		case "low,possible":			return new Image("square_g4.gif", "");
+		case "low,likely":				return new Image("square_g4.gif", "");
+		case "low,probable":			return new Image("square_g4.gif", "");
+		case "low,certain":				return new Image("square_g4.gif", "");
+		
+		case "very low,rare":			return new Image("square_g4.gif", "");
+		case "very low,possible":		return new Image("square_g4.gif", "");
+		case "very low,likely":			return new Image("square_g4.gif", "");
+		case "very low,probable":		return new Image("square_g4.gif", "");
+		case "very low,certain":		return new Image("square_g4.gif", "");
+        default: 						return new Image("", "");
+	}
+
+}
+  
 	
   private Image getColorImage(String level){
 		switch (level.toLowerCase()) {
