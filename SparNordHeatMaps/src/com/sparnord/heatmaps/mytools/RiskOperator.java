@@ -49,7 +49,7 @@ public class RiskOperator {
 	}
 	
 	public static String getElementAtRisk(MegaObject risk){
-		MegaCollection elements= risk.getCollection("Element at Risk");
+		MegaCollection elements= risk.getCollection("Element at Risk").filter("~QrUiM9B5iCN0[Org-Unit]");
 		if(elements.size()>0){
 			MegaObject element=elements.get(1);
 			return element.getProp("Short Name");

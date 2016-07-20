@@ -10,6 +10,7 @@ public class RiskOperator {
 	static String shortName = "~Z20000000D60[Short Name]";
 	static String name = "~210000000900[Name]";
 	static String absID = "~310000000D00[Absolute Identifier]";
+	static String orgUnitTypeID="~QrUiM9B5iCN0[Org-Unit]";
 	
 	public static String getCode(MegaObject risk){
 		return risk.getProp("Risk Code");
@@ -54,7 +55,7 @@ public class RiskOperator {
 	}
 	
 	public static String getElementAtRisk(MegaObject risk){
-		MegaCollection elements= risk.getCollection("Element at Risk");
+		MegaCollection elements= risk.getCollection("Element at Risk").filter("~QrUiM9B5iCN0[Org-Unit]");
 		if(elements.size()>0){
 			MegaObject element=elements.get(1);
 			return element.getProp("Short Name");
