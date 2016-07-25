@@ -95,7 +95,12 @@ public class TablePresentationExport {
           //tex_mavName = this.getTitlesTexts(mavSecondMetAttribute.getProp(GRCMetaAttribut.MA_VALUE_NAME));
           //set the horizontal title
           tex_mavName = this.getTitlesTexts_SN(mavSecondMetAttribute.getProp(GRCMetaAttribut.MA_VALUE_NAME));
-          this.heatMapDataset.addItem(tex_mavName, 1 + "," + column);
+          if(isFirstHeatMap){
+        	  this.heatMapDataset.addItem(likelihoodConvertor(mavSecondMetAttribute.getProp(GRCMetaAttribut.MA_VALUE_NAME)),1 + "," + column);
+          }else{
+        	  this.heatMapDataset.addItem(tex_mavName, 1 + "," + column);
+          }
+          
         }
         String heatMapCellKey = mavFirstMetAttribute.getProp(GRCMetaAttribut.MA_HEX_ID_ABS) + "," + mavSecondMetAttribute.getProp(GRCMetaAttribut.MA_HEX_ID_ABS);
         HCell hcell = mavsMap.get(heatMapCellKey);
@@ -166,6 +171,20 @@ public class TablePresentationExport {
 		  }         
       }
 	  return RisksCode;	  
+  }
+  
+  /**
+   * author ming
+   */
+  private Text likelihoodConvertor(String likelihood){
+	  switch(likelihood.toLowerCase()){
+		  case "rare":		return getTitlesTexts_SN("20-100 Years");
+		  case "possible":	return getTitlesTexts_SN("10-20 Years");
+		  case "likely":	return getTitlesTexts_SN("5-10 Years");
+		  case "probable":	return getTitlesTexts_SN("2-5 Years");
+		  case "certain":	return getTitlesTexts_SN("Less Than 2 Years");
+		  default: 			return new Text("",false);
+	  }
   }
 
   /**

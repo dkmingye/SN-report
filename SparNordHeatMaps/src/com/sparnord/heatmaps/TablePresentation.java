@@ -89,8 +89,12 @@ public class TablePresentation {
       for (MegaObject mavSecondMetAttribute : this.hMap.getMavSecondMaAttribute()) {
         if (!setTitles) {
           tex_mavName = this.getTitlesTexts(mavSecondMetAttribute.getProp(GRCMetaAttribut.MA_VALUE_NAME));
-          tex_mavName.getItemRenderer().addParameter("columnwidth", "60px");         
-          this.dimSecondMaAttribute.addItem(tex_mavName);
+          tex_mavName.getItemRenderer().addParameter("columnwidth", "60px");  
+          if(isFirstHeatMap){
+        	  this.dimSecondMaAttribute.addItem(likelihoodConvertor(mavSecondMetAttribute.getProp(GRCMetaAttribut.MA_VALUE_NAME)));
+          }else{
+        	  this.dimSecondMaAttribute.addItem(tex_mavName);
+          }
         }
         String heatMapCellKey = mavFirstMetAttribute.getProp(GRCMetaAttribut.MA_HEX_ID_ABS) + "," + mavSecondMetAttribute.getProp(GRCMetaAttribut.MA_HEX_ID_ABS);
         HCell hcell = mavsMap.get(heatMapCellKey);
@@ -160,6 +164,19 @@ public class TablePresentation {
 		  return "<div style=\"visibility: hidden\">0</div>";
 	  }
 	  return RisksCode;	  
+  }
+  /**
+   * author ming
+   */
+  private Text likelihoodConvertor(String likelihood){
+	  switch(likelihood.toLowerCase()){
+		  case "rare":		return getTitlesTexts("20-100 Years");
+		  case "possible":	return getTitlesTexts("10-20 Years");
+		  case "likely":	return getTitlesTexts("5-10 Years");
+		  case "probable":	return getTitlesTexts("2-5 Years");
+		  case "certain":	return getTitlesTexts("Less Than 2 Years");
+		  default: 			return new Text("",false);
+	  }
   }
   
   /**
